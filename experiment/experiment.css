@@ -1,0 +1,91 @@
+/* === General container (applies to all jsPsych content) === */
+.jspsych-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   /* vertical centering */
+  align-items: center;       /* horizontal centering */
+  min-height: 100vh;         /* full viewport height */
+  max-width: 900px;  
+  padding-left: 80px;
+  padding-right: 80px;
+  text-align: center;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 18px;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* === HtmlButtonResponse plugin buttons === */
+.jspsych-btn {
+  background-color: #4cafef;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 22px;
+  margin: 12px auto;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-block;
+  transition: background-color 0.2s, transform 0.1s;
+}
+.jspsych-btn:hover {
+  background-color: #379ad7;
+}
+.jspsych-btn:active {
+  transform: scale(0.97);
+}
+
+.jspsych-html-button-response-stimulus {
+  max-width: 700px;   /* adjust as needed */
+  padding-left: 80px;
+  padding-right: 80px;
+  text-align: center; /* optional, keeps text centered */
+  line-height: 1.6;   /* improves readability */
+}
+
+/* === SurveyJS elements (modern theme overrides) === */
+
+/* Center all question text + choices */
+.sd-body,
+.sd-question,
+.sd-question__title,
+.sd-item {
+  text-align: left !important;
+  justify-content: left !important;
+}
+
+/* Make survey question titles bold + spaced */
+.sd-question__title {
+  font-weight: bold !important;
+  margin-bottom: 12px !important;
+}
+
+/* Add more spacing between questions */
+.sd-question {
+  margin-bottom: 28px !important;
+}
+
+/* Remove unwanted separators/lines */
+.sd-separator,
+.sd-row::before,
+.sd-row::after {
+  border: none !important;
+}
+
+/* Style survey navigation buttons (Next / Complete) */
+.sd-navigation input,
+.sd-completedpage input {
+  background-color: #4cafef !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 6px !important;
+  padding: 12px 22px !important;
+  font-size: 16px !important;
+  cursor: pointer !important;
+  margin: 20px auto !important;
+  display: block !important;
+}
+.sd-navigation input:hover,
+.sd-completedpage input:hover {
+  background-color: #379ad7 !important;
+}

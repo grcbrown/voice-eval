@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- basic jsPsych functionality -->
+        <script src="https://unpkg.com/jspsych@8.2.2"></script>
+
+        <!-- default jsPsych stylesheet -->
+        <link href="https://unpkg.com/jspsych@8.2.2/css/jspsych.css" rel="stylesheet" type="text/css" />
+
+        <!-- jsPsych plugins -->
+        <script src="https://unpkg.com/@jspsych/plugin-html-button-response@2.1.0"></script>
+        <script src="https://unpkg.com/@jspsych/plugin-survey@3.0.0"></script>
+        <script src="https://unpkg.com/@jspsych/plugin-survey-text@2.1.0"></script>
+        <script src="https://unpkg.com/@jspsych/plugin-audio-keyboard-response@2.1.0"></script>
+        <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.1.0"></script>
+        <script src="https://unpkg.com/@jspsych/plugin-preload@2.1.0"></script>
+        <script src="https://unpkg.com/@jspsych/plugin-audio-button-response@2.1.0"></script>
+
+        <!-- jsPsych survey stylesheet -->
+        <link rel="stylesheet" href="https://unpkg.com/@jspsych/plugin-survey@3.0.0/css/survey.min.css">
+        
+        <!-- DataPipe -->
+        <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
+
+        <!-- Tell the file to run some .js files -->
+        <script src="trials.js"></script>
+        <script src="util.js"></script>
+        <script src="experiment.js"></script>
+
+        <!-- link the CSS file -->
+        <link href="experiment.css" rel="stylesheet" type="text/css" />
+
+        <title>Listening Study</title>
+    </head>
+
+    <body>
+    <div id="jspsych-target"></div>
+  </body>
+</html>
