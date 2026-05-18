@@ -68,9 +68,6 @@ const audio_check = {
     response_ends_trial: true,
     trial_duration: 20000,
     on_finish: function(data) {
-        count++;
-        var progress = count/n_trials;
-        jsPsych.setProgressBar((progress));
         if (data.response == 2) {
             data.result = "correct"
         } else{
