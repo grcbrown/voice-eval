@@ -100,7 +100,7 @@ const instructions = {
 //SURVEY INSTRUCTIONS
 const transition = {
     type: jsPsychHtmlButtonResponse,
-    stimulus: "<p>You have completed the listening trial. You will now be directed to an short questionnaire about AI, followed by an optional demographic survey. <br><br> After seeing the survey, you will be able to end the study.</p>",
+    stimulus: "<p>You have completed the listening trial. You will now be directed to an short questionnaire about artificial intelligence, followed by an optional demographic survey. <br><br> After seeing the survey, you will be able to end the study.</p>",
     choices: ['Continue']
 };
 
@@ -118,7 +118,7 @@ const questionnaire = {
         elements: [
           {
             type: "html",
-            html: "<p>Please respond to the following questions. When you are done, click 'Next' to continue to the optional demographic questions.</p>"
+            html: "<p><strong>Please respond to the following questions. When you are done, click 'Next' to continue to the optional demographic questions.</strong></p>"
           },
           {
             type: "html",
@@ -130,6 +130,7 @@ const questionnaire = {
             title: "To what extent do you think AI will make this world a better place?",
             minRateDescription: "Not at all",
             maxRateDescription: "To a great extent",
+            isRequired: true,
             desplayMode: "buttons"
           },
           {
@@ -138,6 +139,7 @@ const questionnaire = {
             title: "How much would you like to use technologies that rely on AI?",
             minRateDescription: "Not at all",
             maxRateDescription: "To a great extent",
+            isRequired: true,
             desplayMode: "buttons"
           },
           {
@@ -146,6 +148,7 @@ const questionnaire = {
             title: "To what extent do you look forward to future developments in AI?",
             minRateDescription: "Not at all",
             maxRateDescription: "To a great extent",
+            isRequired: true,
             desplayMode: "buttons"
           },
           {
@@ -154,6 +157,7 @@ const questionnaire = {
             title: "To what extent do you believe AI offers solutions to global problems?",
             minRateDescription: "Not at all",
             maxRateDescription: "To a great extent",
+            isRequired: true,
             desplayMode: "buttons"
           },
           {
@@ -162,6 +166,7 @@ const questionnaire = {
             title: "How positive are your feelings when you think about AI?",
             minRateDescription: "Not at all positive",
             maxRateDescription: "Very positive",
+            isRequired: true,
             desplayMode: "buttons"
           },
           {
@@ -170,6 +175,7 @@ const questionnaire = {
             title: "To what extent would you rather choose a technology with AI than one without it?",
             minRateDescription: "Not at all",
             maxRateDescription: "To a great extent",
+            isRequired: true,
             desplayMode: "buttons"
           }
         ]
@@ -179,7 +185,7 @@ const questionnaire = {
         elements: [
       {
         type: "html",
-        html: "<p>Please respond to the following questions if you feel comfortable doing so. Once you have completed the survey, click 'Finish' at the bottom of the page to navigate to the end of the experiment.</p>"
+        html: "<p><strong>Please respond to the following questions if you feel comfortable doing so. Once you have completed the survey, click 'Finish' at the bottom of the page to navigate to the end of the experiment.</strong></p>"
       },
       {
         type: "boolean",
