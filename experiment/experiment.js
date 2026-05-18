@@ -125,27 +125,52 @@ const questionnaire = {
             html: "<p>In the following, we are interested in your attitudes towards artificial intelligence (AI). AI can execute tasks that typically require human intelligence. It enables machines to sense, act, learn, and adapt in an autonomous, human-like way. AI may be part of a computer or online platform—but it can also be encountered in various other hardware devices, such as robots.</p>"
           },
           {
-            type: "matrix",
-            name: "ai_attitudes",
-            alternateRows: true,
-            isAllRowRequired: true,
-            columns: [
-              { value: 1, text: "Not at all" },
-              { value: 2, text: "" },
-              { value: 3, text: "" },
-              { value: 4, text: "Moderately" },
-              { value: 5, text: "" },
-              { value: 6, text: "" },
-              { value: 7, text: "To a great extent" }
-            ],
-            rows: [
-              { value: "cognitive_1", text: "To what extent do you think AI will make this world a better place?" },
-              { value: "behavioral_1", text: "How much would you like to use technologies that rely on AI?" },
-              { value: "affective_1", text: "To what extent do you look forward to future developments in AI?" },
-              { value: "cognitive_2", text: "To what extent do you believe AI offers solutions to global problems?" },
-              { value: "affective_2", text: "How positive are your feelings when you think about AI?" },
-              { value: "behavioral_2", text: "To what extent would you rather choose a technology with AI than one without it?" }
-            ]
+            type: "rating",
+            name: "cognitive_1",
+            title: "To what extent do you think AI will make this world a better place?",
+            minRateDescription: "Not at all",
+            maxRateDescription: "To a great extent",
+            desplayMode: "buttons"
+          },
+          {
+            type: "rating",
+            name: "behavioral_1",
+            title: "How much would you like to use technologies that rely on AI?",
+            minRateDescription: "Not at all",
+            maxRateDescription: "To a great extent",
+            desplayMode: "buttons"
+          },
+          {
+            type: "rating",
+            name: "affective_1",
+            title: "To what extent do you look forward to future developments in AI?",
+            minRateDescription: "Not at all",
+            maxRateDescription: "To a great extent",
+            desplayMode: "buttons"
+          },
+          {
+            type: "rating",
+            name: "cognitive_2",
+            title: "To what extent do you believe AI offers solutions to global problems?",
+            minRateDescription: "Not at all",
+            maxRateDescription: "To a great extent",
+            desplayMode: "buttons"
+          },
+          {
+            type: "rating",
+            name: "affective_2",
+            title: "How positive are your feelings when you think about AI?",
+            minRateDescription: "Not at all positive",
+            maxRateDescription: "Very positive",
+            desplayMode: "buttons"
+          },
+          {
+            type: "rating",
+            name: "behavioral_2",
+            title: "To what extent would you rather choose a technology with AI than one without it?",
+            minRateDescription: "Not at all",
+            maxRateDescription: "To a great extent",
+            desplayMode: "buttons"
           }
         ]
       },
