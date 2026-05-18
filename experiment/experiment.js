@@ -64,7 +64,10 @@ const audio_check = {
     type: jsPsychAudioButtonResponse,
     stimulus: 'audio/gift.wav',
     choices: ['dog', 'friend', 'gift', 'smile', 'blue'],
-    prompt: '<p><br>This is an attention check. <br><br> Click on the word that is being repeated by the speaker.</p>',
+    prompt: audioPlayingIndicator + `
+        <p><br>This is an attention check. 
+        <br><br> Click on the word that is being repeated by the speaker.</p>
+        `,
     response_ends_trial: true,
     trial_duration: 20000,
     on_finish: function(data) {

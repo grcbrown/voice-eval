@@ -15,7 +15,7 @@ const trial_1 = {
         // Step 2: Collect 5 words via individual text boxes
         {
             type: jsPsychSurveyText,
-            preamble: '<p>What are the first 5 words that come to mind to describe the audio clip you just heard?<br>Please enter one word per box.</p>',
+            preamble: audioPlayingIndicator + `<p>What are the first 5 words that come to mind to describe the audio clip you just heard?<br>Please enter one word per box.</p>`,
             questions: [
                 { prompt: 'Word 1:', name: 'word_1', rows: 1, columns: 30, required: true },
                 { prompt: 'Word 2:', name: 'word_2', rows: 1, columns: 30, required: true },
@@ -58,7 +58,7 @@ const trial_2 = {
         // Step 2: Collect 5 words via individual text boxes
         {
             type: jsPsychSurveyText,
-            preamble: '<p>What are the first 5 words that come to mind to describe the audio clip you just heard?<br>Please enter one word per box.</p>',
+            preamble: audioPlayingIndicator + `<p>What are the first 5 words that come to mind to describe the audio clip you just heard?<br>Please enter one word per box.</p>`,
             questions: [
                 { prompt: 'Word 1:', name: 'word_1', rows: 1, columns: 30, required: true },
                 { prompt: 'Word 2:', name: 'word_2', rows: 1, columns: 30, required: true },
@@ -101,8 +101,7 @@ const trial_3 = {
         // Step 2: Collect 5 words via individual text boxes
         {
             type: jsPsychSurveyText,
-            preamble: '<p>What are the first 5 words that come to mind to describe the audio clip you just heard?<br>Please enter one word per box.</p>',
-            questions: [
+            preamble: audioPlayingIndicator + `<p>What are the first 5 words that come to mind to describe the audio clip you just heard?<br>Please enter one word per box.</p>`,            questions: [
                 { prompt: 'Word 1:', name: 'word_1', rows: 1, columns: 30, required: true },
                 { prompt: 'Word 2:', name: 'word_2', rows: 1, columns: 30, required: true },
                 { prompt: 'Word 3:', name: 'word_3', rows: 1, columns: 30, required: true },
@@ -144,7 +143,7 @@ const trial_4 = {
         // Step 2: Collect 5 words via individual text boxes
         {
             type: jsPsychSurveyText,
-            preamble: '<p>What are the first 5 words that come to mind to describe the audio clip you just heard?<br>Please enter one word per box.</p>',
+            preamble: audioPlayingIndicator + `<p>What are the first 5 words that come to mind to describe the audio clip you just heard?<br>Please enter one word per box.</p>`,
             questions: [
                 { prompt: 'Word 1:', name: 'word_1', rows: 1, columns: 30, required: true },
                 { prompt: 'Word 2:', name: 'word_2', rows: 1, columns: 30, required: true },
