@@ -17,7 +17,7 @@ var preload_trial = {
     'audio/test-2.wav',
     'audio/test-3.wav', 
     'audio/test-4.wav',
-    'gift.wav'
+    'audio/gift.wav'
     ],
     auto_preload: true
 };
