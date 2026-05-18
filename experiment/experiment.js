@@ -1,7 +1,6 @@
 const jsPsych = initJsPsych({
     show_progress_bar: true,
     max_load_time: 120000, // 120 seconds
-    override_safe_mode: true,
     on_finish: function() {
         jsPsych.data.displayData('csv');
   }
@@ -46,8 +45,6 @@ const irb = {
     response_ends_trial: true,
     margin_vertical: '10px'
 };
-
-//timeline.push(irb);
 
 //audio warning
 const audio_warn = {
