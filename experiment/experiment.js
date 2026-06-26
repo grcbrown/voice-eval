@@ -9,15 +9,10 @@ const jsPsych = initJsPsych({
 let timeline = []; //Empty timeline
 
 //PRELOAD AUDIO//
+// Built from the stimuli list in trials.js, plus the attention-check clip.
 var preload_trial = {
     type: jsPsychPreload,
-    audio: [
-    'audio/test-1.wav',
-    'audio/test-2.wav',
-    'audio/test-3.wav', 
-    'audio/test-4.wav',
-    'audio/gift.wav'
-    ],
+    audio: [...stimuli.map(s => s.file), 'audio/gift.wav'],
     auto_preload: true
 };
 
@@ -96,7 +91,15 @@ var feedback = {
 //INSTRUCTIONS
 const instructions = {
     type: jsPsychHtmlButtonResponse,
-    stimulus: "<p>INSTRUCTIONS HERE<br><br>If you understand the instructions and are ready to hear the first audio clip, click ‘Continue’.</p>",
+    stimulus: `
+        <div style="font-size: 16px; text-align: left; margin: 25px 100px;">
+            <p>In this study, you will hear a single audio clip of someone speaking.</p>
+            <p>Please listen carefully — the clip will play <strong>once</strong> and cannot be replayed, so keep your headphones on and your volume set.</p>
+            <p>After listening, you will be asked to type the first <strong>five words</strong> that come to mind to describe what you heard (one word per box), and then answer a short question about the voice.</p>
+            <p>There are no right or wrong answers. We are interested in your honest first impressions.</p>
+            <p>When you understand these instructions and are ready to hear the audio clip, click 'Continue'.</p>
+        </div>
+    `,
     choices: ['Continue']
 };
 
@@ -295,22 +298,21 @@ var thanks = {
 };
 
 //RUN
-// --- Define N condition timelines (identical structure) ---
-let condition_1_timeline = [preload_trial, irb, audio_warn, audio_check, feedback, instructions, trial_1, transition, questionnaire, save_data, thanks];
-let condition_2_timeline = [preload_trial, irb, audio_warn, audio_check, feedback, instructions, trial_2, transition, questionnaire, save_data, thanks];
-let condition_3_timeline = [preload_trial, irb, audio_warn, audio_check, feedback, instructions, trial_3, transition, questionnaire, save_data, thanks];
-let condition_4_timeline = [preload_trial, irb, audio_warn, audio_check, feedback, instructions, trial_4, transition, questionnaire, save_data, thanks];
+const shared_pre  = [preload_trial, audio_warn, audio_check, feedback, instructions];
+const shared_post = [transition, questionnaire, save_data, thanks];
 
-// --- Assign N condition timelines ---
-async function createExperiment(){ 
-  const condition = await jsPsychPipe.getCondition("9WYG1q2Cpwp9");
-    if(condition == 0) { timeline = condition_1_timeline; }
-    if(condition == 1) { timeline = condition_2_timeline; }
-    if(condition == 2) { timeline = condition_3_timeline; }
-    if(condition == 3) { timeline = condition_4_timeline; }
+const condition_timelines = trials.map(trial => [...shared_pre, trial, ...shared_post]);
+
+// --- Assign a condition via DataPipe ---
+async function createExperiment(){
+  let condition = await jsPsychPipe.getCondition("9WYG1q2Cpwp9");
+  if (condition == null || condition < 0 || condition >= condition_timelines.length) {
+    console.warn(`getCondition returned ${condition}; expected 0..${condition_timelines.length - 1}. Falling back to a random voice. Check the condition count in DataPipe.`);
+    condition = Math.floor(Math.random() * condition_timelines.length);
+  }
+
+  timeline = condition_timelines[condition];
   jsPsych.run(timeline);
 }
 
 createExperiment();
-
-
