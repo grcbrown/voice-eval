@@ -92,7 +92,7 @@ var feedback = {
 const instructions = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
-        <div style="font-size: 16px; text-align: left; margin: 25px 100px;">
+        <div style="font-size: 16px; text-align: center; margin-top: 25px; margin-right: 100px; margin-left: 100px; margin-bottom: 25px;">
             <p>In this study, you will hear a single audio clip of someone speaking.</p>
             <p>Please listen carefully — the clip will play <strong>once</strong> and cannot be replayed, so keep your headphones on and your volume set.</p>
             <p>After listening, you will be asked to type the first <strong>five words</strong> that come to mind to describe what you heard (one word per box), and then answer a short question about the voice.</p>
