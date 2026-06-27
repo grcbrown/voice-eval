@@ -53,38 +53,79 @@ const audio_warn = {
     response_ends_trial: true
 };
     
-//audio check
+// AUDIO CHECK with up to 2 attempts 
+let audio_check_attempts = 0;
+const MAX_AUDIO_CHECK_ATTEMPTS = 2;
+
 const audio_check = {
     type: jsPsychAudioButtonResponse,
     stimulus: 'audio/gift.wav',
     choices: ['dog', 'friend', 'gift', 'smile', 'blue'],
     prompt: audioPlayingIndicator + `
-        <p><br>This is an attention check. 
+        <p><br>This is an audio check.
         <br><br> Click on the word that is being repeated by the speaker.</p>
         `,
     response_ends_trial: true,
     trial_duration: 20000,
+    data: { task: 'audio_check' },   // tag so we can find this trial reliably
     on_finish: function(data) {
-        if (data.response == 2) {
-            data.result = "correct"
-        } else{
-            data.result = "incorrect"
+        audio_check_attempts++;
+        data.attempt = audio_check_attempts;
+        if (data.response == 2) {     // index 2 = 'gift'
+            data.result = "correct";
+        } else {
+            data.result = "incorrect";
         }
-    }    
+    }
 };
 
-var feedback = {
+// Prolific screen-out completion URL (failed audio check)
+const PROLIFIC_SCREENOUT_URL = "https://app.prolific.com/submissions/complete?cc=CRMIS6QD";
+
+const feedback = {
     type: jsPsychHtmlButtonResponse,
-    //trial_duration: 10000,
     stimulus: function(){
-      var last_trial_correct = jsPsych.data.get().last(1).values()[0].response;
-      if(last_trial_correct == 2){
-        return "<p>Correct! You are ready to begin the study.</p>"; // the parameter value has to be returned from the function
-      } else {
-        return "<p>Incorrect. Please adjust the volume of your device before beginning the study.</p>"; // the parameter value has to be returned from the function
-      }
+        const last = jsPsych.data.get().filter({ task: 'audio_check' }).last(1).values()[0];
+        if (last.result == "correct") {
+            return "<p>Correct! You are ready to begin the study.</p>";
+        } else if (audio_check_attempts < MAX_AUDIO_CHECK_ATTEMPTS) {
+            return "<p>That wasn't the word that was played. Please make sure your headphones are on and your volume is turned up, then try the check one more time.</p>";
+        } else {
+            return `
+                <div style="font-size:16px; text-align:center; margin:25px 100px;">
+                    <p>Thank you for your interest in this study. However, this study requires being able to clearly hear short audio clips, and the audio check was not passed after two attempts. You are therefore unable to continue.</p>
+                    <p>Please click the button below to return your submission on Prolific. If you are not redirected automatically, use this link:<br>
+                    <a href="${PROLIFIC_SCREENOUT_URL}">${PROLIFIC_SCREENOUT_URL}</a></p>
+                </div>
+            `;
+        }
     },
-    choices: ['Begin Study']
+    choices: function(){
+        const last = jsPsych.data.get().filter({ task: 'audio_check' }).last(1).values()[0];
+        if (last.result == "correct") {
+            return ['Begin Study'];
+        } else if (audio_check_attempts < MAX_AUDIO_CHECK_ATTEMPTS) {
+            return ['Try Again'];
+        } else {
+            return ['Return to Prolific'];
+        }
+    },
+    on_finish: function(){
+        const last = jsPsych.data.get().filter({ task: 'audio_check' }).last(1).values()[0];
+        // Failed the final attempt → send them to the Prolific screen-out URL.
+        if (last.result == "incorrect" && audio_check_attempts >= MAX_AUDIO_CHECK_ATTEMPTS) {
+            window.location.href = PROLIFIC_SCREENOUT_URL;
+        }
+    }
+};
+
+// Loop: replay the check + feedback only while incorrect AND attempts remain.
+const audio_check_procedure = {
+    timeline: [audio_check, feedback],
+    loop_function: function(){
+        const last = jsPsych.data.get().filter({ task: 'audio_check' }).last(1).values()[0];
+        return (last.result == "incorrect" && audio_check_attempts < MAX_AUDIO_CHECK_ATTEMPTS);
+    }
 };
 
 //INSTRUCTIONS
@@ -289,15 +330,27 @@ const save_data = {
 };
 
 //THANKS
+const PROLIFIC_COMPLETION_URL = "https://app.prolific.com/submissions/complete?cc=CS83SPLJ";
+
 var thanks = {
   type: jsPsychHtmlKeyboardResponse,
-  stimulus: `<p>You've finished the study. Thank you for your time!</p>
-    <p><a href="https://app.prolific.com/submissions/complete?cc=C1BQGMWP">Click here to return to Prolific and complete the study</a>.</p>`,
-  choices: "NO_KEYS"
+  stimulus: `
+    <div style="font-size:16px; text-align:center; margin:25px 100px;">
+      <p>You've finished the study. Thank you for your time!</p>
+      <p>You are being redirected back to Prolific to complete your submission. If you are not redirected automatically within a few seconds, please click the link below:</p>
+      <p><a href="${PROLIFIC_COMPLETION_URL}">Return to Prolific and complete the study</a></p>
+    </div>
+  `,
+  choices: "NO_KEYS",
+  on_load: function(){
+    setTimeout(function(){
+      window.location.href = PROLIFIC_COMPLETION_URL;
+    }, 3000); // brief pause so participants register the thank-you before redirect
+  }
 };
 
 //RUN
-const shared_pre  = [preload_trial, audio_warn, audio_check, feedback, instructions];
+const shared_pre  = [preload_trial, audio_warn, audio_check_procedure, instructions];
 const shared_post = [transition, questionnaire, save_data, thanks];
 
 const condition_timelines = trials.map(trial => [...shared_pre, trial, ...shared_post]);
