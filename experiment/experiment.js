@@ -62,7 +62,7 @@ const audio_check = {
     stimulus: 'audio/gift.wav',
     choices: ['dog', 'friend', 'gift', 'smile', 'blue'],
     prompt: audioPlayingIndicator + `
-        <p><br>This is an audio check.
+        <p>This is an audio check.
         <br><br> Click on the word that is being repeated by the speaker.</p>
         `,
     response_ends_trial: true,
@@ -132,12 +132,23 @@ const audio_check_procedure = {
 const instructions = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
-        <div style="font-size: 16px; text-align: center; margin-top: 25px; margin-right: 100px; margin-left: 100px; margin-bottom: 25px;">
-            <p>In this study, you will hear a single audio clip of someone speaking.</p>
+        <div style="
+            max-width: 640px;
+            margin: 40px auto;
+            padding: 32px 40px;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: left;
+            color: #1f2937;
+        ">
+            <p style="margin-top: 0;">In this study, you will hear a single audio clip of someone speaking.</p>
             <p>Please listen carefully. The clip will play <strong>once</strong> and cannot be replayed, so keep your headphones on and your volume set.</p>
             <p>After listening, you will be asked to type the first <strong>five words</strong> that come to mind to describe what you heard (one word per box), and then answer a short question about the voice.</p>
             <p>There are no right or wrong answers. We are interested in your honest first impressions.</p>
-            <p>When you understand these instructions and are ready to hear the audio clip, click 'Continue'.</p>
+            <p style="margin-bottom: 0;">When you understand these instructions and are ready to hear the audio clip, click 'Continue'.</p>
         </div>
     `,
     choices: ['Continue']
