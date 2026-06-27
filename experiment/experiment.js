@@ -50,8 +50,7 @@ const audio_warn = {
         <p>This study requires you to listen to audio clips. To ensure you can adequately hear the audio presented in this study, the next page will have an audio attention check. Please wear headphones, and be prepared to adjust the volume on your device if necessary.<br><br>When you are ready to begin the audio attention check, click 'Start'.</p>
     </div>
 `,
-    response_ends_trial: true,
-    trial_duration: 10000
+    response_ends_trial: true
 };
     
 //audio check
@@ -94,7 +93,7 @@ const instructions = {
     stimulus: `
         <div style="font-size: 16px; text-align: center; margin-top: 25px; margin-right: 100px; margin-left: 100px; margin-bottom: 25px;">
             <p>In this study, you will hear a single audio clip of someone speaking.</p>
-            <p>Please listen carefully — the clip will play <strong>once</strong> and cannot be replayed, so keep your headphones on and your volume set.</p>
+            <p>Please listen carefully. The clip will play <strong>once</strong> and cannot be replayed, so keep your headphones on and your volume set.</p>
             <p>After listening, you will be asked to type the first <strong>five words</strong> that come to mind to describe what you heard (one word per box), and then answer a short question about the voice.</p>
             <p>There are no right or wrong answers. We are interested in your honest first impressions.</p>
             <p>When you understand these instructions and are ready to hear the audio clip, click 'Continue'.</p>
