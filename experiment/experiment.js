@@ -80,7 +80,7 @@ const audio_check = {
 };
 
 // Prolific screen-out completion URL (failed audio check)
-const PROLIFIC_SCREENOUT_URL = "https://app.prolific.com/submissions/complete?cc=CRMIS6QD";
+const PROLIFIC_SCREENOUT_URL = "https://app.prolific.com/submissions/complete?cc=C113TYX3";
 
 const feedback = {
     type: jsPsychHtmlButtonResponse,
@@ -341,7 +341,7 @@ const save_data = {
 };
 
 //THANKS
-const PROLIFIC_COMPLETION_URL = "https://app.prolific.com/submissions/complete?cc=CS83SPLJ";
+const PROLIFIC_COMPLETION_URL = "https://app.prolific.com/submissions/complete?cc=CQT46WN8";
 
 var thanks = {
   type: jsPsychHtmlKeyboardResponse,
