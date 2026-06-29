@@ -323,6 +323,24 @@ var subject_id = jsPsych.data.getURLVariable('PROLIFIC_PID');
 var study_id = jsPsych.data.getURLVariable('STUDY_ID');
 var session_id = jsPsych.data.getURLVariable('SESSION_ID');
 
+const PILOT = true; // SET TO TRUE FOR PILOT DATA COLLECTION ONLY
+
+const DATAPIPE_FULL_ID  = "9WYG1q2Cpwp9"; // your real study — leave its counter untouched
+const DATAPIPE_PILOT_ID = "s4ryRafTNjTj";  // create a new DataPipe experiment, set it to 9 conditions
+
+const EXPERIMENT_ID = PILOT ? DATAPIPE_PILOT_ID : DATAPIPE_FULL_ID;
+
+// The 9 voices to pilot (ids must match those in trials.js). Edit freely.
+const PILOT_VOICE_IDS = [
+    'whytee', 'xiaoxi', 'riley', 'john', 'vince_duglus',
+    'gracie_valley', 'zuri', 'grampa_werthers', 'maria_moody'
+];
+
+// Active voices for this run, in a fixed order so condition index → voice is stable.
+const active_stimuli = PILOT
+    ? stimuli.filter(s => PILOT_VOICE_IDS.includes(s.id))
+    : stimuli;
+
 jsPsych.data.addProperties({
   subject_id: subject_id,
   study_id: study_id,
@@ -335,10 +353,11 @@ const filename = `${p_id}.csv`;
 const save_data = {
   type: jsPsychPipe,
   action: "save",
-  experiment_id: "9WYG1q2Cpwp9",
+  experiment_id: EXPERIMENT_ID,   // was "9WYG1q2Cpwp9"
   filename: filename,
   data_string: ()=>jsPsych.data.get().csv()
 };
+
 
 //THANKS
 const PROLIFIC_COMPLETION_URL = "https://app.prolific.com/submissions/complete?cc=CQT46WN8";
@@ -364,11 +383,11 @@ var thanks = {
 const shared_pre  = [preload_trial, audio_warn, audio_check_procedure, instructions];
 const shared_post = [transition, questionnaire, save_data, thanks];
 
-const condition_timelines = trials.map(trial => [...shared_pre, trial, ...shared_post]);
+const condition_timelines = active_stimuli.map(stim => [...shared_pre, makeTrial(stim), ...shared_post]);
 
 // --- Assign a condition via DataPipe ---
 async function createExperiment(){
-  let condition = await jsPsychPipe.getCondition("9WYG1q2Cpwp9");
+  let condition = await jsPsychPipe.getCondition(EXPERIMENT_ID);  // was "9WYG1q2Cpwp9"
   if (condition == null || condition < 0 || condition >= condition_timelines.length) {
     console.warn(`getCondition returned ${condition}; expected 0..${condition_timelines.length - 1}. Falling back to a random voice. Check the condition count in DataPipe.`);
     condition = Math.floor(Math.random() * condition_timelines.length);
