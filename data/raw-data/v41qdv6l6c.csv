@@ -1,0 +1,34 @@
+"success","timeout","failed_images","failed_audio","failed_video","trial_type","trial_index","plugin_version","time_elapsed","subject_id","study_id","session_id","rt","stimulus","response","task","attempt","result","id","slider_start"
+"true","false","[]","[]","[]","preload","0","2.1.0","2731","698131d58ccd103588cb5ca6","6a4006e2dbfd0dc33ffaa39b","6a42a9049fc15ea042d9d0a4","","","","","","","",""
+"","","","","","html-button-response","1","2.1.0","11303","698131d58ccd103588cb5ca6","6a4006e2dbfd0dc33ffaa39b","6a42a9049fc15ea042d9d0a4","8570","
+    <div style=""font-size: 16px; text-align: center; margin-top: 25px; margin-right: 100px; margin-left: 100px; margin-bottom: 25px;"">
+        <p>This study requires you to listen to audio clips. To ensure you can adequately hear the audio presented in this study, the next page will have an audio attention check. Please wear headphones, and be prepared to adjust the volume on your device if necessary.<br><br>When you are ready to begin the audio attention check, click 'Start'.</p>
+    </div>
+","0","","","","",""
+"","","","","","audio-button-response","2","2.1.0","15486","698131d58ccd103588cb5ca6","6a4006e2dbfd0dc33ffaa39b","6a42a9049fc15ea042d9d0a4","4144","audio/gift.wav","2","audio_check","1","correct","",""
+"","","","","","html-button-response","3","2.1.0","16602","698131d58ccd103588cb5ca6","6a4006e2dbfd0dc33ffaa39b","6a42a9049fc15ea042d9d0a4","1114","<p>Correct! You are ready to begin the study.</p>","0","","","","",""
+"","","","","","html-button-response","4","2.1.0","31949","698131d58ccd103588cb5ca6","6a4006e2dbfd0dc33ffaa39b","6a42a9049fc15ea042d9d0a4","15347","
+        <div style=""
+            max-width: 640px;
+            margin: 40px auto;
+            padding: 32px 40px;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: left;
+            color: #1f2937;
+        "">
+            <p style=""margin-top: 0;"">In this study, you will hear a single audio clip of someone speaking.</p>
+            <p>Please listen carefully. The clip will play <strong>once</strong> and cannot be replayed, so keep your headphones on and your volume set.</p>
+            <p>After listening, you will be asked to type the first <strong>five words</strong> that come to mind to describe what you heard (one word per box), and then answer a short question about the voice.</p>
+            <p>There are no right or wrong answers. We are interested in your honest first impressions.</p>
+            <p style=""margin-bottom: 0;"">When you understand these instructions and are ready to hear the audio clip, click 'Continue'.</p>
+        </div>
+    ","0","","","","",""
+"","","","","","audio-keyboard-response","5","2.1.0","52666","698131d58ccd103588cb5ca6","6a4006e2dbfd0dc33ffaa39b","6a42a9049fc15ea042d9d0a4","null","audio/zuri.mp3","null","listen","","","zuri",""
+"","","","","","survey-text","6","2.1.0","88132","698131d58ccd103588cb5ca6","6a4006e2dbfd0dc33ffaa39b","6a42a9049fc15ea042d9d0a4","35464","","{""word_1"":""educated"",""word_2"":""smart"",""word_3"":""culture"",""word_4"":""female"",""word_5"":""curious""}","response","","","zuri",""
+"","","","","","html-slider-response","7","2.1.0","91064","698131d58ccd103588cb5ca6","6a4006e2dbfd0dc33ffaa39b","6a42a9049fc15ea042d9d0a4","2930","<p>How human did the voice sound?</p>","84","rating","","","zuri","50"
+"","","","","","html-button-response","8","2.1.0","96597","698131d58ccd103588cb5ca6","6a4006e2dbfd0dc33ffaa39b","6a42a9049fc15ea042d9d0a4","5532","<p>You have completed the listening trial. You will now be directed to an short questionnaire about artificial intelligence, followed by an optional demographic survey. <br><br> After seeing the survey, you will be able to end the study.</p>","0","","","","",""
+"","","","","","survey","9","3.0.0","151526","698131d58ccd103588cb5ca6","6a4006e2dbfd0dc33ffaa39b","6a42a9049fc15ea042d9d0a4","54889","","{""cognitive_1"":3,""behavioral_1"":4,""affective_1"":4,""cognitive_2"":3,""affective_2"":3,""behavioral_2"":4,""understood"":true,""age"":29,""gender"":""female"",""ethnicity"":""white"",""language"":""English"",""education"":""Graduated college"",""enjoy"":""Average study"",""payment"":""The payment was fair"",""question1"":null,""question2"":null,""question3"":null,""comments"":null}","","","","",""

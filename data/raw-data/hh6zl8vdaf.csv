@@ -1,0 +1,36 @@
+"success","timeout","failed_images","failed_audio","failed_video","trial_type","trial_index","plugin_version","time_elapsed","subject_id","study_id","session_id","rt","stimulus","response","task","attempt","result","id","slider_start"
+"true","false","[]","[]","[]","preload","0","2.1.0","3526","6a1628e7140a66991045f8e7","6a4006e2dbfd0dc33ffaa39b","6a42a6299b751f72bb2a0227","","","","","","","",""
+"","","","","","html-button-response","1","2.1.0","9422","6a1628e7140a66991045f8e7","6a4006e2dbfd0dc33ffaa39b","6a42a6299b751f72bb2a0227","5894","
+    <div style=""font-size: 16px; text-align: center; margin-top: 25px; margin-right: 100px; margin-left: 100px; margin-bottom: 25px;"">
+        <p>This study requires you to listen to audio clips. To ensure you can adequately hear the audio presented in this study, the next page will have an audio attention check. Please wear headphones, and be prepared to adjust the volume on your device if necessary.<br><br>When you are ready to begin the audio attention check, click 'Start'.</p>
+    </div>
+","0","","","","",""
+"","","","","","audio-button-response","2","2.1.0","11352","6a1628e7140a66991045f8e7","6a4006e2dbfd0dc33ffaa39b","6a42a6299b751f72bb2a0227","992","audio/gift.wav","0","audio_check","1","incorrect","",""
+"","","","","","html-button-response","3","2.1.0","13086","6a1628e7140a66991045f8e7","6a4006e2dbfd0dc33ffaa39b","6a42a6299b751f72bb2a0227","1733","<p>That wasn't the word that was played. Please make sure your headphones are on and your volume is turned up, then try the check one more time.</p>","0","","","","",""
+"","","","","","audio-button-response","4","2.1.0","16480","6a1628e7140a66991045f8e7","6a4006e2dbfd0dc33ffaa39b","6a42a6299b751f72bb2a0227","3389","audio/gift.wav","2","audio_check","2","correct","",""
+"","","","","","html-button-response","5","2.1.0","17824","6a1628e7140a66991045f8e7","6a4006e2dbfd0dc33ffaa39b","6a42a6299b751f72bb2a0227","1343","<p>Correct! You are ready to begin the study.</p>","0","","","","",""
+"","","","","","html-button-response","6","2.1.0","28176","6a1628e7140a66991045f8e7","6a4006e2dbfd0dc33ffaa39b","6a42a6299b751f72bb2a0227","10351","
+        <div style=""
+            max-width: 640px;
+            margin: 40px auto;
+            padding: 32px 40px;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: left;
+            color: #1f2937;
+        "">
+            <p style=""margin-top: 0;"">In this study, you will hear a single audio clip of someone speaking.</p>
+            <p>Please listen carefully. The clip will play <strong>once</strong> and cannot be replayed, so keep your headphones on and your volume set.</p>
+            <p>After listening, you will be asked to type the first <strong>five words</strong> that come to mind to describe what you heard (one word per box), and then answer a short question about the voice.</p>
+            <p>There are no right or wrong answers. We are interested in your honest first impressions.</p>
+            <p style=""margin-bottom: 0;"">When you understand these instructions and are ready to hear the audio clip, click 'Continue'.</p>
+        </div>
+    ","0","","","","",""
+"","","","","","audio-keyboard-response","7","2.1.0","44505","6a1628e7140a66991045f8e7","6a4006e2dbfd0dc33ffaa39b","6a42a6299b751f72bb2a0227","null","audio/xiaoxi.mp3","null","listen","","","xiaoxi",""
+"","","","","","survey-text","8","2.1.0","78418","6a1628e7140a66991045f8e7","6a4006e2dbfd0dc33ffaa39b","6a42a6299b751f72bb2a0227","33908","","{""word_1"":""Woman"",""word_2"":""Young"",""word_3"":""Scientific"",""word_4"":""Colorful"",""word_5"":""Rainbow""}","response","","","xiaoxi",""
+"","","","","","html-slider-response","9","2.1.0","83346","6a1628e7140a66991045f8e7","6a4006e2dbfd0dc33ffaa39b","6a42a6299b751f72bb2a0227","4927","<p>How human did the voice sound?</p>","91","rating","","","xiaoxi","50"
+"","","","","","html-button-response","10","2.1.0","92200","6a1628e7140a66991045f8e7","6a4006e2dbfd0dc33ffaa39b","6a42a6299b751f72bb2a0227","8853","<p>You have completed the listening trial. You will now be directed to an short questionnaire about artificial intelligence, followed by an optional demographic survey. <br><br> After seeing the survey, you will be able to end the study.</p>","0","","","","",""
+"","","","","","survey","11","3.0.0","183825","6a1628e7140a66991045f8e7","6a4006e2dbfd0dc33ffaa39b","6a42a6299b751f72bb2a0227","91575","","{""cognitive_1"":4,""behavioral_1"":4,""affective_1"":3,""cognitive_2"":4,""affective_2"":4,""behavioral_2"":3,""understood"":true,""age"":58,""gender"":""Male"",""ethnicity"":""White/hispanic"",""language"":""English"",""education"":""Hold a higher degree"",""enjoy"":""Better than average study"",""payment"":""The payment was fair"",""comments"":""AI is still a tool, any change in the world will need to be directed by people."",""question1"":null,""question2"":null,""question3"":null}","","","","",""

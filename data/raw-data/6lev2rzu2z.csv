@@ -1,0 +1,34 @@
+"success","timeout","failed_images","failed_audio","failed_video","trial_type","trial_index","plugin_version","time_elapsed","subject_id","study_id","session_id","rt","stimulus","response","task","attempt","result","id","slider_start"
+"true","false","[]","[]","[]","preload","0","2.1.0","3470","699ccc000fd3903ad3da0f99","6a4006e2dbfd0dc33ffaa39b","6a42a2fc2735ca3b2fa07304","","","","","","","",""
+"","","","","","html-button-response","1","2.1.0","26557","699ccc000fd3903ad3da0f99","6a4006e2dbfd0dc33ffaa39b","6a42a2fc2735ca3b2fa07304","23085","
+    <div style=""font-size: 16px; text-align: center; margin-top: 25px; margin-right: 100px; margin-left: 100px; margin-bottom: 25px;"">
+        <p>This study requires you to listen to audio clips. To ensure you can adequately hear the audio presented in this study, the next page will have an audio attention check. Please wear headphones, and be prepared to adjust the volume on your device if necessary.<br><br>When you are ready to begin the audio attention check, click 'Start'.</p>
+    </div>
+","0","","","","",""
+"","","","","","audio-button-response","2","2.1.0","30519","699ccc000fd3903ad3da0f99","6a4006e2dbfd0dc33ffaa39b","6a42a2fc2735ca3b2fa07304","3811","audio/gift.wav","2","audio_check","1","correct","",""
+"","","","","","html-button-response","3","2.1.0","31579","699ccc000fd3903ad3da0f99","6a4006e2dbfd0dc33ffaa39b","6a42a2fc2735ca3b2fa07304","1058","<p>Correct! You are ready to begin the study.</p>","0","","","","",""
+"","","","","","html-button-response","4","2.1.0","50087","699ccc000fd3903ad3da0f99","6a4006e2dbfd0dc33ffaa39b","6a42a2fc2735ca3b2fa07304","18506","
+        <div style=""
+            max-width: 640px;
+            margin: 40px auto;
+            padding: 32px 40px;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: left;
+            color: #1f2937;
+        "">
+            <p style=""margin-top: 0;"">In this study, you will hear a single audio clip of someone speaking.</p>
+            <p>Please listen carefully. The clip will play <strong>once</strong> and cannot be replayed, so keep your headphones on and your volume set.</p>
+            <p>After listening, you will be asked to type the first <strong>five words</strong> that come to mind to describe what you heard (one word per box), and then answer a short question about the voice.</p>
+            <p>There are no right or wrong answers. We are interested in your honest first impressions.</p>
+            <p style=""margin-bottom: 0;"">When you understand these instructions and are ready to hear the audio clip, click 'Continue'.</p>
+        </div>
+    ","0","","","","",""
+"","","","","","audio-keyboard-response","5","2.1.0","70170","699ccc000fd3903ad3da0f99","6a4006e2dbfd0dc33ffaa39b","6a42a2fc2735ca3b2fa07304","null","audio/riley.mp3","null","listen","","","riley",""
+"","","","","","survey-text","6","2.1.0","120489","699ccc000fd3903ad3da0f99","6a4006e2dbfd0dc33ffaa39b","6a42a2fc2735ca3b2fa07304","50313","","{""word_1"":""Artificial"",""word_2"":""Calm"",""word_3"":""Fake"",""word_4"":""Unrealistic"",""word_5"":""robotic""}","response","","","riley",""
+"","","","","","html-slider-response","7","2.1.0","123644","699ccc000fd3903ad3da0f99","6a4006e2dbfd0dc33ffaa39b","6a42a2fc2735ca3b2fa07304","3153","<p>How human did the voice sound?</p>","0","rating","","","riley","50"
+"","","","","","html-button-response","8","2.1.0","130252","699ccc000fd3903ad3da0f99","6a4006e2dbfd0dc33ffaa39b","6a42a2fc2735ca3b2fa07304","6607","<p>You have completed the listening trial. You will now be directed to an short questionnaire about artificial intelligence, followed by an optional demographic survey. <br><br> After seeing the survey, you will be able to end the study.</p>","0","","","","",""
+"","","","","","survey","9","3.0.0","202076","699ccc000fd3903ad3da0f99","6a4006e2dbfd0dc33ffaa39b","6a42a2fc2735ca3b2fa07304","71736","","{""cognitive_1"":3,""behavioral_1"":2,""affective_1"":3,""cognitive_2"":3,""affective_2"":3,""behavioral_2"":3,""understood"":true,""age"":18,""gender"":""Transgender"",""ethnicity"":""White"",""language"":""English"",""education"":""Graduated high school"",""enjoy"":""Better than average study"",""payment"":""The payment was fair"",""question1"":null,""question2"":null,""question3"":null,""comments"":null}","","","","",""
