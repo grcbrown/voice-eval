@@ -8,6 +8,13 @@ editor: visual
 
 Just made this script!
 
+## Library
+
+```{r}
+library(dplyr)
+library(ggplot2)
+```
+
 ## Import data
 
 import data
@@ -89,7 +96,7 @@ analysis_df <- raw_df %>%
 
 ## Data Analysis - Across Speakers
 
-## Data Analysis - By Speaker 
+## Data Analysis - By Speaker
 
 ```{r}
 analysis_df %>% 
@@ -101,3 +108,14 @@ analysis_df %>%
   )
 ```
 
+visualizations
+
+```{r}
+
+ggplot(analysis_df, aes(voice, humanness_rating, fill = voice)) + 
+  geom_violin() +
+  scale_fill_brewer(palette = "Set3") +
+  geom_jitter(width = 0.05) +
+  theme_minimal()
+
+```
