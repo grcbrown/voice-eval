@@ -1,0 +1,17 @@
+---
+title: "data_analysis_LSA"
+format: html
+editor: visual
+---
+
+## Notes
+
+Just made this script!
+
+## Import data
+
+import data
+
+```{r}
+
+```
