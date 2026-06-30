@@ -13,6 +13,7 @@ Just made this script!
 ```{r}
 library(dplyr)
 library(ggplot2)
+library(tidyr)
 ```
 
 ## Import data
@@ -118,4 +119,20 @@ ggplot(analysis_df, aes(voice, humanness_rating, fill = voice)) +
   geom_jitter(width = 0.05) +
   theme_minimal()
 
+```
+
+## Sankey prep
+
+```{r}
+category_counts <- analysis_df %>%
+  pivot_longer(
+    cols = category_1:category_5,
+    names_to = "word_number",
+    values_to = "category"
+  ) %>%
+  count(category, sort = TRUE)
+```
+
+```{r}
+View(category_counts)
 ```
