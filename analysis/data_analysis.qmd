@@ -67,6 +67,24 @@ categories <- list(
                     "creative", "dreamy", "forgettable", "fun", "good", "grating", "odd",
                     "pleasant", "quality", "tiring", "dramatic", "vivid", "colorful", "emotive", "exaggerated")
 )
+
+assign_category <- function(response) {
+  if (is.na(response) || response == "") return(NA_character_)
+  for (cat_name in names(categories)) {
+    if (response %in% categories[[cat_name]]) {
+      return(cat_name)
+    }
+  }
+  return("unknown")
+}
+
+analysis_df <- raw_df %>%
+  mutate(across(
+    .cols = c(word_1, word_2, word_3, word_4, word_5),
+    .fns  = ~ sapply(tolower(trimws(.x)), assign_category),
+    .names = "category_{.col}"
+  )) %>%
+  rename_with(~ gsub("category_word_", "category_", .x), starts_with("category_word_"))
 ```
 
 ## Data Analysis - Across Speakers
@@ -74,7 +92,7 @@ categories <- list(
 ## Data Analysis - By Speaker 
 
 ```{r}
-raw_df %>% 
+analysis_df %>% 
   group_by(voice) %>% 
   summarise(
     mean = mean(humanness_rating),
