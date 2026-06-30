@@ -25,14 +25,7 @@ raw_df <- raw_df %>%
 head(raw_df)
 ```
 
-```{r}
-raw_df %>% 
-  group_by(voice) %>% 
-  summarise(
-    mean = mean(humanness_rating),
-    sd = sd(humanness_rating)
-  )
-```
+## Add Response Categories
 
 ```{r}
 categories <- list(
@@ -75,3 +68,17 @@ categories <- list(
                     "pleasant", "quality", "tiring", "dramatic", "vivid", "colorful", "emotive", "exaggerated")
 )
 ```
+
+## Data Analysis - Across Speakers
+
+## Data Analysis - By Speaker 
+
+```{r}
+raw_df %>% 
+  group_by(voice) %>% 
+  summarise(
+    mean = mean(humanness_rating),
+    sd = sd(humanness_rating)
+  )
+```
+
