@@ -96,7 +96,8 @@ analysis_df %>%
   group_by(voice) %>% 
   summarise(
     mean = mean(humanness_rating),
-    sd = sd(humanness_rating)
+    sd = sd(humanness_rating), 
+    median = median(humanness_rating)
   )
 ```
 
