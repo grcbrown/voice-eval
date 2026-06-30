@@ -13,5 +13,9 @@ Just made this script!
 import data
 
 ```{r}
+raw_df <- read.csv("../data/pilot-responses-combined.csv")
+```
 
+```{r}
+head(raw_df)
 ```
