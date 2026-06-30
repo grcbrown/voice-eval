@@ -1,40 +1,4 @@
----
-title: "data_analysis_LSA"
-format: html
-editor: visual
----
-
-## Notes
-
-Just made this script!
-
-## Import data
-
-import data
-
-```{r}
-raw_df <- read.csv("../data/pilot-responses-combined.csv")
-raw_df <- raw_df %>% 
-  group_by(subject_id) %>%
-  mutate(ai_score = sum(cognitive_1, cognitive_2, 
-                         affective_1, affective_2, 
-                         behavioral_1, behavioral_2)/6)
-```
-
-```{r}
-head(raw_df)
-```
-
-```{r}
-raw_df %>% 
-  group_by(voice) %>% 
-  summarise(
-    mean = mean(humanness_rating),
-    sd = sd(humanness_rating)
-  )
-```
-
-```{r}
+# Voice-description categories (212 unique words, pilot-responses-combined.csv)
 categories <- list(
   content     = c("rainbow", "horizon", "rain", "light", "sunlight", "colors", "prism", "the", "color",
                     "informative", "descriptive", "sun", "when", "arc", "arch", "beyond",
@@ -74,4 +38,3 @@ categories <- list(
                     "creative", "dreamy", "forgettable", "fun", "good", "grating", "odd",
                     "pleasant", "quality", "tiring", "dramatic", "vivid", "colorful", "emotive", "exaggerated")
 )
-```
