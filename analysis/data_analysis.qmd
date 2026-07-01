@@ -310,7 +310,7 @@ ggplot() +
               width = 0.5, height = 0.02, alpha = 0.5) +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey") +
   labs(x = "Humanness Rating", 
-       y = "P(social | non-content descriptor)") +
+       y = "P(social or psychological | non-content descriptor)") +
   theme_minimal()
 ```
 
