@@ -6,7 +6,7 @@ editor: visual
 
 ## Notes
 
-Just made this script!
+---
 
 ## Library
 
@@ -14,6 +14,7 @@ Just made this script!
 library(dplyr)
 library(ggplot2)
 library(tidyr)
+library(forcats)
 ```
 
 ## Import data
@@ -135,4 +136,50 @@ category_counts <- analysis_df %>%
 
 ```{r}
 View(category_counts)
+```
+
+## AI attitude
+
+add a col for averaged AI attitude per listener
+
+```{r}
+analysis_df <- analysis_df %>%
+  rowwise() %>%
+  mutate(ai_attitude_score = rowMeans(across(c(cognitive_1, behavioral_1, affective_1, cognitive_2, affective_2, behavioral_2))))
+```
+
+```{r}
+
+ai_attitude_plot <- ggplot(analysis_df, aes(x = ai_attitude_score, y = fct_reorder(source_file, ai_attitude_score))) +
+  geom_point(size = 1.5, alpha = 0.7) +
+  labs(x = "AI attitude score", y = "participants") + 
+  theme_minimal() +
+  theme(axis.text.y = element_blank())
+```
+
+```{r}
+ai_attitude_plot
+```
+
+Density + box (i dont really like this)
+
+```{r}
+ggplot(analysis_df, aes(x = ai_attitude_score)) +
+  geom_histogram(aes(y = after_stat(density)), 
+                 fill = "steelblue", 
+                 color = "white", 
+                 alpha = 0.4,
+                 bins = 30) +       
+  geom_density(fill = "skyblue", alpha = 0.5) +
+  labs(title = "Distribution of AI Attitude Scores", x = "AI Attitude Score", y = "Density") +
+  theme_minimal()
+```
+
+```{r}
+ggplot(analysis_df, aes(x = "", y = ai_attitude_score)) +
+  geom_boxplot(fill = "lightpink", alpha = 0.5, width = 0.3) +
+  labs(title = "Distribution of AI Attitude Scores", 
+       x = "All participants") +
+  geom_jitter(width = 0.05)+
+  theme_minimal()
 ```
