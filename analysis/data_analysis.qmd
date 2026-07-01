@@ -8,7 +8,7 @@ editor: visual
 
 ------------------------------------------------------------------------
 
-## Library
+## Libraries
 
 ```{r}
 library(dplyr)
@@ -17,6 +17,7 @@ library(tidyr)
 library(forcats)
 library(lme4)
 library(corrplot)
+library(clipr)
 ```
 
 ## Import data
@@ -232,7 +233,7 @@ ggplot(analysis_df, aes(x = "", y = ai_attitude_score)) +
   theme_minimal()
 ```
 
-## Question: Social attributions persist, even at low humanness? 
+## Question: Social attributions persist, even at low humanness?
 
 ```{r}
 long_df <- analysis_df %>%
@@ -300,7 +301,7 @@ ggplot() +
 
 Social attribution rate remained substantial across the humanness range, even for voices rated near the bottom of the scale, roughly 37–49% of non-content descriptors were social, well above a floor of zero.
 
-## Question: Transition Probabilities? 
+## Question: Transition Probabilities?
 
 ```{r}
 transitions <- analysis_df %>%
@@ -337,7 +338,7 @@ Unsure what exactly to make of this. There is some same-category momentum (compe
 
 Perhaps these can be framed as predictions about what patterns we will observe in the larger dataset (once collected)?
 
-## Question: AI attitude as predictor? 
+## Question: AI attitude as predictor?
 
 ```{r}
 valence_lookup <- tibble(
@@ -398,7 +399,9 @@ ai_summary <- eval_sub %>%
   )
 ai_summary
 
-ggplot(eval_sub, aes(x = ai_score, 
+ggplot(e
+
+       val_sub, aes(x = ai_score, 
                      y = p_positive, 
                      color = any_artificial)) +
   geom_point(alpha = 0.7, size = 2) +
@@ -412,3 +415,21 @@ ggplot(eval_sub, aes(x = ai_score,
 ```
 
 Results inconclusive. Heavily lacking any cases of artificial descriptions paired with valenced evaluations.
+
+## word cloud prep
+
+(includes content words...)
+
+```{r}
+gracie_words <- analysis_df %>% filter(voice == "gracie_valley")
+gracie_words <- gracie_words[,c("word_1", "word_2", "word_3", "word_4", "word_5")]
+gracie_words_lst <- unlist(gracie_words) %>% as.character()
+write_clip(gracie_words_lst)
+```
+
+```{r}
+vince_words <- analysis_df %>% filter(voice == "vince_duglus")
+vince_words <- vince_words[,c("word_1", "word_2", "word_3", "word_4", "word_5")]
+vince_words_lst <- unlist(vince_words) %>% as.character()
+write_clip(vince_words_lst)
+```
