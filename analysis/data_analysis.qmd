@@ -142,6 +142,22 @@ analysis_df %>%
   )
 ```
 
+```{r}
+valence_counts_voice <- analysis_df %>%
+  select(subject_id, word_1:word_5, voice) %>%
+  pivot_longer(word_1:word_5, names_to = "slot", values_to = "word") %>%
+  mutate(word = tolower(trimws(word))) %>%
+  left_join(valence_lookup, by = "word") %>%
+  group_by(voice) %>%
+  summarise(
+    n_positive  = sum(valence == "positive",  na.rm = TRUE),
+    n_negative  = sum(valence == "negative",  na.rm = TRUE),
+    n_ambiguous = sum(valence == "ambiguous", na.rm = TRUE),
+    .groups = "drop"
+  )
+valence_counts_voice
+```
+
 visualizations
 
 ```{r}
@@ -261,7 +277,7 @@ newdat$hi    <- plogis(pred$fit + 1.96 * pred$se.fit)
 newdat
 
 newdat <- data.frame(humanness_rating = seq(0, 100, by = 2))
-pred <- predict(m_subj, newdata = data.frame(humanness_rating = newdat$humanness_rating,
+pred <- predict(m_social_2, newdata = data.frame(humanness_rating = newdat$humanness_rating,
                                              voice = "gracie_valley"),  # arbitrary ref level
                 type = "link", se.fit = TRUE)
 newdat$p  <- plogis(pred$fit)
@@ -337,6 +353,7 @@ valence_lookup <- tibble(
   )
 )
 
+# participant valence_counts
 valence_counts <- analysis_df %>%
   select(subject_id, word_1:word_5) %>%
   pivot_longer(word_1:word_5, names_to = "slot", values_to = "word") %>%
