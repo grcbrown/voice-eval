@@ -16,6 +16,7 @@ library(ggplot2)
 library(tidyr)
 library(forcats)
 library(lme4)
+library(corrplot)
 ```
 
 ## Import data
@@ -75,8 +76,7 @@ categories <- list(
   locale = c("american", "california", "californian", "new yorker", "city", "culture", "urban"),
   evaluation  = c("annoying", "beautiful", "interesting", "boring", "confusing", "cool", "corny",
                     "creative", "dreamy", "forgettable", "fun", "good", "grating", "odd",
-                    "pleasant", "quality", "tiring", "dramatic", "vivid", "colorful", "emotive", "exaggerated")
-)
+                    "pleasant", "quality", "tiring", "dramatic", "vivid", "colorful", "emotive", "exaggerated"))
 
 assign_category <- function(response) {
   if (is.na(response) || response == "") return(NA_character_)
@@ -115,6 +115,20 @@ analysis_df <- analysis_df %>%
 ```
 
 ## Data Analysis - Across Speakers
+
+```{r}
+ggplot(analysis_df, aes(x = ai_score, 
+                        y = humanness_rating)) +
+  geom_point(color = "black", 
+             size = 3,
+             alpha = 0.75) +       
+  geom_smooth(method = "lm", color = "red") +
+  theme_minimal() 
+
+cor(analysis_df$ai_score, analysis_df$humanness_rating, method = "pearson")
+```
+
+Humanness rating is minimally correlated with AI attitude score (Pearson's r = 0.096).
 
 ## Data Analysis - By Speaker
 
@@ -304,3 +318,80 @@ trans_mat_w_margin <- trans_mat %>%
 ```
 
 Unsure what exactly to make of this. There is some same-category momentum (competence -\> competence; persona -\> persona; affect -\> affect; personality -\> personality). This probably reflects some sort of participant response strategy. There also seems to be a broader pattern of acoustics –\> social.
+
+Perhaps these can be framed as predictions about what patterns we will observe in the larger dataset (once collected)?
+
+## Question: AI attitude as predictor? 
+
+```{r}
+valence_lookup <- tibble(
+  word = c(
+    "beautiful", "pleasant", "cool", "fun", "dreamy", "vivid", "colorful",
+    "annoying", "boring", "grating", "tiring", "forgettable", "odd", "corny", "confusing",
+    "interesting", "dramatic", "emotive", "exaggerated"
+  ),
+  valence = c(
+    rep("positive", 7),
+    rep("negative", 8),
+    rep("ambiguous", 4)
+  )
+)
+
+valence_counts <- analysis_df %>%
+  select(subject_id, word_1:word_5) %>%
+  pivot_longer(word_1:word_5, names_to = "slot", values_to = "word") %>%
+  mutate(word = tolower(trimws(word))) %>%
+  left_join(valence_lookup, by = "word") %>%
+  group_by(subject_id) %>%
+  summarise(
+    n_positive  = sum(valence == "positive",  na.rm = TRUE),
+    n_negative  = sum(valence == "negative",  na.rm = TRUE),
+    n_ambiguous = sum(valence == "ambiguous", na.rm = TRUE),
+    .groups = "drop"
+  )
+
+eval_df <- analysis_df %>% left_join(valence_counts, by = "subject_id")
+
+# restrict to subj with at least one valenced evaluation
+eval_sub <- eval_df %>%
+  filter(n_positive + n_negative > 0) %>%
+  mutate(p_positive = n_positive / (n_positive + n_negative))
+
+# mean proportion positive by any_artificial
+prop_summary <- eval_sub %>%
+  group_by(any_artificial) %>%
+  summarise(
+    n              = n(),
+    mean_p_positive = mean(p_positive),
+    sd_p_positive   = sd(p_positive),
+    se_p_positive   = sd(p_positive) / sqrt(n),
+    .groups = "drop"
+  )
+prop_summary
+
+# mean ai_score by any_artificial
+ai_summary <- eval_sub %>%
+  group_by(any_artificial) %>%
+  summarise(
+    n              = n(),
+    mean_ai_score  = mean(ai_score),
+    sd_ai_score    = sd(ai_score),
+    se_ai_score    = sd(ai_score) / sqrt(n),
+    .groups = "drop"
+  )
+ai_summary
+
+ggplot(eval_sub, aes(x = ai_score, 
+                     y = p_positive, 
+                     color = any_artificial)) +
+  geom_point(alpha = 0.7, size = 2) +
+  geom_smooth(method = "loess", se = TRUE, alpha = 0.15) +
+  scale_color_brewer(palette = "Set1",
+                     name = "Any artificial\ndescriptor") +
+  labs(
+    x = "AI attitude score (higher = more positive toward AI)",
+    y = "Proportion positive valence") +
+  theme_minimal()
+```
+
+Results inconclusive. Heavily lacking any cases of artificial descriptions paired with valenced evaluations.
