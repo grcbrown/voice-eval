@@ -171,6 +171,21 @@ ggplot(analysis_df, aes(voice, humanness_rating, fill = voice)) +
 
 ```
 
+```{r}
+long_df %>% 
+  filter(cat != "content") %>% 
+  ggplot() +
+  geom_bar(aes(y = voice,
+               fill = cat),
+           position = "fill") +
+  coord_flip() +
+  labs(x = "Proportion of Non-Content Responses",
+       y = "Voice",
+       fill = "Category")
+
+ggsave(file="./data_analysis_files/by-voice-categories.png",width=10,height=6)
+```
+
 ## Sankey prep
 
 ```{r}
@@ -399,9 +414,7 @@ ai_summary <- eval_sub %>%
   )
 ai_summary
 
-ggplot(e
-
-       val_sub, aes(x = ai_score, 
+ggplot(eval_sub, aes(x = ai_score, 
                      y = p_positive, 
                      color = any_artificial)) +
   geom_point(alpha = 0.7, size = 2) +
@@ -415,6 +428,13 @@ ggplot(e
 ```
 
 Results inconclusive. Heavily lacking any cases of artificial descriptions paired with valenced evaluations.
+
+```{r}
+glm(p_positive ~ scale(humanness_rating)*scale(ai_score), 
+    data = eval_sub,
+    family = binomial) %>%
+  summary()
+```
 
 ## word cloud prep
 
