@@ -268,4 +268,39 @@ ggplot() +
   theme_minimal()
 ```
 
-Social attribution rate remained substantial across the humanness range — even for voices rated near the bottom of the scale, roughly 37–49% of non-content descriptors were social, well above a floor of zero.
+Social attribution rate remained substantial across the humanness range, even for voices rated near the bottom of the scale, roughly 37–49% of non-content descriptors were social, well above a floor of zero.
+
+## Question: Transition Probabilities? 
+
+```{r}
+transitions <- analysis_df %>%
+  select(subject_id, voice, category_1:category_5) %>%
+  pivot_longer(category_1:category_5, names_to="slot", values_to="cat") %>%
+  mutate(slot = as.integer(gsub("category_","",slot))) %>%
+  filter(cat != "content") %>%
+  arrange(subject_id, slot) %>%
+  group_by(subject_id) %>%
+  mutate(next_cat = lead(cat)) %>%
+  filter(!is.na(next_cat)) %>%
+  ungroup()
+
+# raw transition probability matrix
+trans_mat <- transitions %>%
+  count(cat, next_cat) %>%
+  group_by(cat) %>%
+  mutate(p = n / sum(n)) %>%
+  ungroup()
+
+# add marginal probabilities 
+marginals <- transitions %>%
+  count(next_cat) %>%
+  mutate(p_marginal = n / sum(n)) %>%
+  select(next_cat, p_marginal)
+
+# matrix with marginals 
+trans_mat_w_margin <- trans_mat %>%
+  left_join(marginals, by = "next_cat") %>%
+  mutate(lift = p / p_marginal)
+```
+
+Unsure what exactly to make of this. There is some same-category momentum (competence -\> competence; persona -\> persona; affect -\> affect; personality -\> personality). This probably reflects some sort of participant response strategy. There also seems to be a broader pattern of acoustics –\> social.
