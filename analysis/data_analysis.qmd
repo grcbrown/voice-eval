@@ -6,7 +6,7 @@ editor: visual
 
 ## Notes
 
----
+------------------------------------------------------------------------
 
 ## Library
 
@@ -15,6 +15,7 @@ library(dplyr)
 library(ggplot2)
 library(tidyr)
 library(forcats)
+library(lme4)
 ```
 
 ## Import data
@@ -94,6 +95,23 @@ analysis_df <- raw_df %>%
     .names = "category_{.col}"
   )) %>%
   rename_with(~ gsub("category_word_", "category_", .x), starts_with("category_word_"))
+
+# add broad characterizations
+social_cats   <- c("gender","age","personality","competence","persona",
+                   "appearance","locale","affect")
+acoustic_cats <- c("voice_quality","prosody","intensity")
+
+analysis_df <- analysis_df %>%
+  rowwise() %>%
+  mutate(
+    n_social   = sum(c_across(category_1:category_5) %in% social_cats),
+    n_acoustic = sum(c_across(category_1:category_5) %in% acoustic_cats),
+    n_content  = sum(c_across(category_1:category_5) == "content"),
+    any_artificial = any(c_across(word_1:word_5) %in% 
+                           c("fake","artificial","ai generated","digital","inauthentic",
+                             "manufactured","robotic","scripted","unrealistic"))
+  ) %>%
+  ungroup()
 ```
 
 ## Data Analysis - Across Speakers
@@ -183,3 +201,71 @@ ggplot(analysis_df, aes(x = "", y = ai_attitude_score)) +
   geom_jitter(width = 0.05)+
   theme_minimal()
 ```
+
+## Question: Social attributions persist, even at low humanness? 
+
+```{r}
+long_df <- analysis_df %>%
+  pivot_longer(category_1:category_5, names_to="slot", values_to="cat") %>%
+  filter(cat != "content") %>%
+  mutate(is_social = cat %in% social_cats,
+         slot_num = as.integer(gsub("category_","",slot)))
+
+subj_df <- long_df %>% # subject-clustering accounts for between-subj design
+  group_by(subject_id, voice, humanness_rating) %>%
+  summarise(n_social = sum(is_social), n_total = n(), .groups="drop")
+
+# models for pilot data (random effects result in singularity)
+m_social_1 <- glm(cbind(n_social, n_total - n_social) ~ scale(humanness_rating) + voice,
+              data = subj_df, family = binomial)
+summary(m_social_1)
+
+m_social_2 <- glm(cbind(n_social, n_total - n_social) ~ scale(humanness_rating),
+                  data = subj_df, family = binomial)
+summary(m_social_2)
+
+# which model better accounts for variance? 
+anova(m_social_1, m_social_2, test = "LRT")
+```
+
+Model results suggest that perceived humanness modulates the attribution of social descriptors, such that higher "humanness" ratings positively predict a greater rate of social descriptors (β = 0.46, p \< .001).
+
+Adding voice as a fixed effect did not attenuate the humanness slope (β = 0.61, p \< .001), and voice did not improve model fit (LRT p = .21), indicating the effect of humanness is not driven by stimulus-specific variation
+
+Note: Because the design was between subjects, I modeled social attribution at the participant level rather than the descriptor level. For each participant, I computed the number of non-content descriptors that could be described as "social" (gender, age, personality, competence, persona, appearance, locale, affect) our of the total non-content descriptors produced, and then I fit a binomial GLM predicting this proportion from z-scored humanness rating.
+
+```{r}
+# predicted probabilities
+newdat <- data.frame(humanness_rating = c(0, 30, 50, 66.6, 100))
+newdat$z <- (newdat$humanness_rating - mean(analysis_df$humanness_rating)) / 
+  sd(analysis_df$humanness_rating)
+pred <- predict(m_social_2, newdata = data.frame(humanness_rating = newdat$humanness_rating),
+                type = "link", se.fit = TRUE)
+newdat$p     <- plogis(pred$fit)
+newdat$lo    <- plogis(pred$fit - 1.96 * pred$se.fit)
+newdat$hi    <- plogis(pred$fit + 1.96 * pred$se.fit)
+newdat
+
+newdat <- data.frame(humanness_rating = seq(0, 100, by = 2))
+pred <- predict(m_subj, newdata = data.frame(humanness_rating = newdat$humanness_rating,
+                                             voice = "gracie_valley"),  # arbitrary ref level
+                type = "link", se.fit = TRUE)
+newdat$p  <- plogis(pred$fit)
+newdat$lo <- plogis(pred$fit - 1.96 * pred$se.fit)
+newdat$hi <- plogis(pred$fit + 1.96 * pred$se.fit)
+
+# visualization
+ggplot() +
+  geom_ribbon(data = newdat, aes(humanness_rating, ymin = lo, ymax = hi), 
+              alpha = 0.2, fill = "steelblue") +
+  geom_line(data = newdat, aes(humanness_rating, p), color = "steelblue", size = 1) +
+  geom_jitter(data = subj_df, 
+              aes(humanness_rating, n_social / n_total),
+              width = 0.5, height = 0.02, alpha = 0.5) +
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey") +
+  labs(x = "Humanness Rating", 
+       y = "P(social | non-content descriptor)") +
+  theme_minimal()
+```
+
+Social attribution rate remained substantial across the humanness range — even for voices rated near the bottom of the scale, roughly 37–49% of non-content descriptors were social, well above a floor of zero.
