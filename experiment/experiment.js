@@ -157,7 +157,7 @@ const instructions = {
 //SURVEY INSTRUCTIONS
 const transition = {
     type: jsPsychHtmlButtonResponse,
-    stimulus: "<p>You have completed the listening trial. You will now be directed to an short questionnaire about artificial intelligence, followed by an optional demographic survey. <br><br> After seeing the survey, you will be able to end the study.</p>",
+    stimulus: "<p>You have completed the listening trial. You will now be directed to a short questionnaire about artificial intelligence, followed by an optional demographic survey. <br><br> After seeing the survey, you will be able to end the study.</p>",
     choices: ['Continue']
 };
 
