@@ -23,17 +23,20 @@ const irb = {
         <div style="font-size: 16px; text-align: center; margin-top: 25px; margin-right: 100px; margin-left: 100px; margin-bottom: 25px;">
             <img src="./image/SUSig_2color_Stree_Left.png" alt="Stanford Logo" style="max-width: 500px; margin-bottom: 20px;">
             <h3>DESCRIPTION</h3>
-            <p>You are invited to participate in a research study. Its general purpose is to understand how people perceive spoken language. We are interested in how people make use of varying properties of language to infer social information about a speaker. In this study, you will hear a spoken sentence, and you will be asked to describe the speaker of the sentence in your own words. Following this, you will be asked to complete an optional demographic survey. Participation in this research is voluntary, and you are free to withdraw your consent at any time.</p>
+            <p>You are invited to participate in a research study on how people perceive spoken language. You will be asked to listen to a spoken passage and answer questions about the voice that read the passage. Following this, you will be asked to complete a short technology survey and an optional questionnaire about your background. Participation in this research is voluntary, and you are free to withdraw your consent at any time.</p>
             <h3>TIME INVOLVEMENT</h3> 
-            <p>Your participation will take approximately X minutes.</p>
+            <p>Your participation will take approximately 3 minutes.</p>
             <h3>PAYMENT</h3> 
             <p>You will be paid at the posted rate.</p>
             <h3>PRIVACY AND CONFIDENTIALITY</h3> 
-            <p>The risks associated with this study are minimal. This judgment is based on a large body of experience with the same or similar procedures with people of similar ages, sex, origins, etc. Study data will be stored securely, in compliance with Stanford University standards, minimizing the risk of confidentiality breach. Your individual privacy will be maintained during the research and in all published and written data resulting from the study.</p>
+            <p>The risks associated with this study are minimal. No information that directly identifies you will be collected. Your answers will be associated only with a randomly generated identifier provided by the recruitment platform.Your answers will be kept confidential. We have procedures to protect your privacy, and your identity will not be included in written materials resulting from the study.</p>
             <h3>CONTACT INFORMATION</h3>
-            <p>If you have any questions, concerns or complaints about this research study, its procedures, risks and benefits, you should contact the Protocol Director, NAME, at (###) ###-####. If you are not satisfied with how this study is being conducted, or if you have any concerns, complaints, or general questions about the research or your rights as a participant, please contact the Stanford Institutional Review Board (IRB) to speak to someone independent of the research team at (650) 723-2480 or toll free at 1-866-680-2906. You can also write to the Stanford IRB, Stanford University, 1705 El Camino Real, Palo Alto, CA 94306 USA.</p> 
+            <p>If you have any questions, concerns or complaints about this research study, its procedures, risks and benefits, you should contact the Protocol Director, Grace Brown, at grcbrown@stanford.edu or (616) 498-8188. If you are not satisfied with how this study is being conducted, or if you have any concerns, complaints, or general questions about the research or your rights as a participant, please contact the Stanford Institutional Review Board (IRB) to speak to someone independent of the research team at (650) 723-2480 or toll free at 1-866-680-2906. You can also write to the Stanford IRB, Stanford University, 1705 El Camino Real, Palo Alto, CA 94306 USA.</p> 
+            <h3>INDEPENDENT CONTACT</h3>
+            <p>If you are not satisfied with how this study is being conducted, or if you have any concerns, complaints, or general questions about the research or your rights as a participant, contact the Stanford Institutional Review Board (IRB) to speak to someone independent of the research team at 650-723-2480 or toll free at 1-866-680-2906. You can also write to the Stanford IRB at irbnonmed@stanford.edu.</p>
             <h3>WAIVER OF DOCUMENTATION</h3>
-            <p>If you agree to participate in this research, please click the 'Continue' button.</p>
+            <p>Please save or print a copy of this page for your records.</p>
+            <p>If you agree to participate in this research, please click the 'Continue' button. If you do not wish to participate, please close this window.</p>
         </div>
     `,
     choices: ['Continue'],
@@ -336,6 +339,11 @@ const PILOT_VOICE_IDS = [
     'gracie_valley', 'zuri', 'grampa_werthers', 'maria_moody'
 ];
 
+//const PILOT_VOICE_IDS = [
+//    'scypher', 'zoe', 'brother_wayne', 'young_jamal', 'boston_bob',
+//    'dorothy', 'campfire_narrator', 'caring_mother', 'geraldine_wallace'
+//];
+
 // Active voices for this run, in a fixed order so condition index → voice is stable.
 const active_stimuli = PILOT
     ? stimuli.filter(s => PILOT_VOICE_IDS.includes(s.id))
@@ -380,7 +388,7 @@ var thanks = {
 };
 
 //RUN
-const shared_pre  = [preload_trial, audio_warn, audio_check_procedure, instructions];
+const shared_pre  = [preload_trial, irb, audio_warn, audio_check_procedure, instructions];
 const shared_post = [transition, questionnaire, save_data, thanks];
 
 const condition_timelines = active_stimuli.map(stim => [...shared_pre, makeTrial(stim), ...shared_post]);
