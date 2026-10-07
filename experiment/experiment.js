@@ -368,7 +368,7 @@ const save_data = {
 
 
 //THANKS
-const PROLIFIC_COMPLETION_URL = "https://app.prolific.com/submissions/complete?cc=CQT46WN8";
+const PROLIFIC_COMPLETION_URL = "https://app.prolific.com/submissions/complete?cc=C113TYX3";
 
 var thanks = {
   type: jsPsychHtmlKeyboardResponse,
