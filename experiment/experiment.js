@@ -328,21 +328,21 @@ var session_id = jsPsych.data.getURLVariable('SESSION_ID');
 
 const PILOT = true; // SET TO TRUE FOR PILOT DATA COLLECTION ONLY
 
-const DATAPIPE_FULL_ID  = "9WYG1q2Cpwp9"; // your real study — leave its counter untouched
-const DATAPIPE_PILOT_ID = "s4ryRafTNjTj";  // create a new DataPipe experiment, set it to 9 conditions
+const DATAPIPE_PILOT_ID  = "9WYG1q2Cpwp9"; // your real study — leave its counter untouched
+//const DATAPIPE_PILOT_ID = "s4ryRafTNjTj";  // create a new DataPipe experiment, set it to 9 conditions
 
 const EXPERIMENT_ID = PILOT ? DATAPIPE_PILOT_ID : DATAPIPE_FULL_ID;
 
 // The 9 voices to pilot (ids must match those in trials.js). Edit freely.
-const PILOT_VOICE_IDS = [
-    'whytee', 'xiaoxi', 'riley', 'john', 'vince_duglus',
-    'gracie_valley', 'zuri', 'grampa_werthers', 'maria_moody'
-];
-
 //const PILOT_VOICE_IDS = [
-//    'scypher', 'zoe', 'brother_wayne', 'young_jamal', 'boston_bob',
-//    'dorothy', 'campfire_narrator', 'caring_mother', 'geraldine_wallace'
+//    'whytee', 'xiaoxi', 'riley', 'john', 'vince_duglus',
+//    'gracie_valley', 'zuri', 'grampa_werthers', 'maria_moody'
 //];
+
+const PILOT_VOICE_IDS = [
+    'scypher', 'zoe', 'brother_wayne', 'young_jamal', 'boston_bob',
+    'dorothy', 'campfire_narrator', 'caring_mother', 'geraldine_wallace'
+];
 
 // Active voices for this run, in a fixed order so condition index → voice is stable.
 const active_stimuli = PILOT
@@ -368,7 +368,7 @@ const save_data = {
 
 
 //THANKS
-const PROLIFIC_COMPLETION_URL = "https://app.prolific.com/submissions/complete?cc=C113TYX3";
+const PROLIFIC_COMPLETION_URL = "https://app.prolific.com/submissions/complete?cc=CQT46WN8";
 
 var thanks = {
   type: jsPsychHtmlKeyboardResponse,
