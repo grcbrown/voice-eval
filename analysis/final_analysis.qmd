@@ -1,0 +1,703 @@
+---
+title: "data_analysis"
+format: html
+editor: visual
+---
+
+## Notes
+
+------------------------------------------------------------------------
+
+## Libraries
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(forcats)
+library(lme4)
+library(corrplot)
+library(clipr)
+```
+
+## Import data
+
+import data
+
+```{r}
+raw_df <- read.csv("../data/responses_combined.csv")
+raw_df <- raw_df %>% 
+  group_by(subject_id) %>%
+  mutate(ai_score = sum(cognitive_1, cognitive_2, 
+                         affective_1, affective_2, 
+                         behavioral_1, behavioral_2)/6)
+```
+
+```{r}
+head(raw_df)
+```
+
+## Add Response Categories
+
+```{r}
+categories <- list(
+  content = c(
+    "(span)", "(the)", "`Beautiful", "a", "Above",
+    "above", "act", "air", "along", "aparant",
+    "APPARENTLY", "Apparently", "apparently", "Arc", "arc",
+    "ARCH", "Arch", "arch", "Arches", "arising",
+    "around", "ball", "Beam", "Beautiful", "beautiful",
+    "Beauty", "beauty", "beginning", "BEYOND", "Beyond",
+    "beyond", "blue", "branch", "cathes", "caves",
+    "Chromatography", "cloud", "Clouds", "clouds", "Cloudy",
+    "Color", "color", "Colorful", "colorful", "Colors",
+    "colors", "colors`", "colour", "colours", "day",
+    "diffraction", "Division", "division", "Drizzle", "drop",
+    "droplets", "drops", "earth", "end", "Ending",
+    "Ends", "ends", "fall", "Fire", "flower",
+    "Form", "form", "Forms", "forms", "Gold",
+    "gold", "green", "grows", "hit", "hits",
+    "HORIZON", "Horizon", "horizon", "horzion", "in",
+    "Lamps", "Light", "light", "lightning", "Lights",
+    "lights", "like", "long", "luck", "meadow",
+    "meet", "Midnight", "Morning", "Nature", "nature",
+    "Nature minded", "Night", "night", "of", "optics",
+    "over", "pair", "Part", "passes", "Path",
+    "path", "photons", "Physics", "physics", "prisim",
+    "PRISM", "Prism", "prism", "prismq", "prizm",
+    "raid", "RAIN", "Rain", "rain", "rain drop",
+    "rainbaw", "RAINBOW", "Rainbow", "rainbow", "Rainbows",
+    "rainbows", "Rainbox", "raindow", "Raindrop", "raindrop",
+    "Raindrops", "raindrops", "rainfall", "Raining", "raining",
+    "Rainy", "rainy", "Rays", "red", "refract",
+    "round", "Science", "science", "shamrock", "Shape",
+    "shape", "Shine", "shines", "shone", "showers",
+    "Site", "skies", "Sky", "sky", "sky watcher",
+    "spectrum", "spring", "storm", "storms", "Strike",
+    "Strikes", "strikes", "Sun", "sun", "sunglight",
+    "Sunlight", "sunlight", "Sunny", "sunrise", "sunrize",
+    "sunset", "Sunshine", "sunshine", "Sunsine", "Symmetrical",
+    "Take", "take", "takes", "THE", "The",
+    "the", "THESE", "they", "this", "thunder",
+    "thunderstorms", "time", "touch", "tree", "Two ends",
+    "universe", "variety", "visual", "Water", "water",
+    "way", "Weather", "weather", "Wet", "wet",
+    "When", "when", "white", "white light", "winds",
+    "with", "Wodded", "world"
+  ),
+  gender = c(
+    "androgenous", "Androgynous", "androgynous", "effeminate", "Female",
+    "female", "Femenine", "Feminine", "feminine", "Genderless",
+    "Gentleman", "girl", "Girlie", "Girly", "girly",
+    "Guy", "he", "Lady", "lady", "Male",
+    "male", "Man", "man", "Manly", "Masculine",
+    "masculine", "Woman", "woman"
+  ),
+  sexuality = c(
+    "gay"
+  ),
+  other_sgi = c(
+    "pass", "trans"
+  ),
+  persona = c(
+    "admirer", "Airhead", "Alpha", "bird", "bohemian",
+    "Boomer", "Bro", "bumbkin", "Cartoon", "cartoon",
+    "cartoonish", "Cat", "Dad", "ditsy", "ditzy",
+    "Documentary", "dude", "Frog", "geek", "geeky",
+    "God", "Hader", "hippie", "hippy", "impressionist",
+    "Isaac", "Kathy bates", "kooky", "Leprachaun", "Leprechaun",
+    "leprechaun", "lobster", "McDonald’s", "Mckenna", "meryl",
+    "Morgan Freeman", "nerd", "Nerdy", "nerdy", "Newton",
+    "old-fashioned", "performative", "Preppy", "Prospector", "prospector",
+    "Radio", "reading a book", "rustic", "Sage", "Santa",
+    "spicoli", "Spongebob", "stoner", "story", "storylike",
+    "streep", "Surfer", "surfer", "TV Voice", "valley",
+    "valley girl", "Verizon", "voiceover", "whimsical", "Wizard",
+    "wizard"
+  ),
+  region = c(
+    "Accent", "accent", "accented", "American", "Boston",
+    "boston", "British", "british", "Bronx", "California",
+    "Californian", "californian", "Country", "country", "dialect",
+    "foreign", "foreigner", "hawaii", "Italian", "native",
+    "New Jersey", "New York", "New york", "New Yorker", "Northeast",
+    "northern?", "Northerner", "northerner", "Southern", "southern",
+    "southernish"
+  ),
+  locale = c(
+    "Alley", "City", "city", "farm", "park",
+    "rural", "School", "Urban", "urban"
+  ),
+  education = c(
+    "academic", "analytuical", "Articulate", "articulate", "capable",
+    "competent", "Complex", "comprehensive", "concise", "Descriptive",
+    "descriptive", "Detailed", "detailed", "Educated", "educated",
+    "educational", "educative", "Eloquent", "eloquent", "enlightening",
+    "Experience", "experienced", "expert", "explanation", "facts",
+    "factual", "Fluent", "Gifted", "inexperienced", "informational",
+    "Informative", "informative", "Informed", "informed", "insightful",
+    "Intellectual", "intelligence", "Intelligent", "intelligent", "knowledeable",
+    "Knowledgable", "knowledgable", "Knowledge", "knowledge", "Knowledgeable",
+    "knowledgeable", "learning", "legible", "Literate", "percise",
+    "Philisophical", "precise", "Professional", "professional", "Profound",
+    "scholar", "Scienctific", "scientic", "Scientific", "scientific",
+    "skilled", "Smart", "smart", "sophisticated", "Succint",
+    "Technical", "thorough", "understandable", "Understanding", "understanding",
+    "very descriptive", "Well Spoken", "well spoken", "Well-spoken", "well-spoken",
+    "wellspoken", "Wisdom", "Wise", "wise", "worldly"
+  ),
+  profession = c(
+    "announcer", "counselor", "educator", "Explainer", "explainer",
+    "Guider", "instructor", "Lecturer", "lecturer", "librarian",
+    "military", "Narrator", "narrator", "pastor", "poet",
+    "preach", "professor", "reader", "researcher", "science teacher",
+    "Scientist", "scientist", "simplifier", "Speaker", "speaker",
+    "Story Teller", "Story-teller", "Storyteller", "storyteller", "Storytelling",
+    "Student", "student", "teach", "Teacher", "teacher",
+    "teaching", "therapist", "weatherman", "Wheatherman", "writer"
+  ),
+  race_ethnicity = c(
+    "African American", "African-American", "Black", "black", "black vernacular",
+    "Caucasian", "Latina", "Person of Color", "White"
+  ),
+  social_standing = c(
+    "Dignity", "entitled", "ghetto", "refined", "Rich",
+    "rich"
+  ),
+  other_soc = c(
+    "casual", "conversational", "culture", "Diversity", "Formal",
+    "infraction", "Public", "Single", "unpopular"
+  ),
+  age = c(
+    "Adult", "ancient", "Antiquated", "childish", "childlike",
+    "Elder", "elder", "Elderly", "elderly", "grandfather",
+    "Grandma", "grandma", "grandmother", "Grandpa", "grandpa",
+    "kids", "Mature", "mature", "middle age", "middle aged",
+    "Middle-Aged", "middle-aged", "Old", "old", "Older",
+    "older", "senior", "twenties", "Young", "young",
+    "younger", "Youthful"
+  ),
+  appearance = c(
+    "appear", "balding", "big", "Blonde", "blonde",
+    "fat", "gray suit", "Hands", "short", "size",
+    "smiling"
+  ),
+  attractiveness = c(
+    "Attractive", "lovely", "luscious", "pretty", "Stunning"
+  ),
+  health = c(
+    "afflictive", "autist", "autistic", "Drunk", "impaired",
+    "sleepy", "smoker", "tired", "weed"
+  ),
+  other_phys = character(0),
+  agreeableness = c(
+    "aggressive", "approachable", "Blunt", "blunt", "Cairing",
+    "Caring", "caring", "Charming", "comfortable", "Comforting",
+    "Compassionate", "condescending", "Down to earth", "empathetic", "fair",
+    "flippant", "Friendly", "friendly", "friiendly", "Gentle",
+    "gentle", "giving", "helpful", "Humble", "Kind",
+    "kind", "likeable", "Lileable", "loving", "motherly",
+    "NICE", "Nice", "nice", "nurturing", "opinionated",
+    "Ornery", "patience", "patient", "Peaceful", "peaceful",
+    "polite", "reassuring", "relatable", "sassy", "Sincere",
+    "sincere", "snark", "Sweet", "sweet", "tender",
+    "Trustworthy", "Truthfull", "uncaring", "wholesome"
+  ),
+  extraversion = c(
+    "active", "Animated", "animated", "assertive", "Assured",
+    "Boisterous", "bubbly", "charismatic", "cheerful", "Confidant",
+    "Confident", "confident", "Dominant", "eager", "Energetic",
+    "energetic", "energy", "Engaged", "engaged", "engagin",
+    "Engaging", "engaging", "enthused", "Enthusiastic", "enthusiastic",
+    "excited", "Expressive", "expressive", "exuberant", "Flamboyant",
+    "flamboyant", "joking", "lively", "locquatious", "Motivational",
+    "outgoing", "outspoken", "Passionate", "passionate", "quiet",
+    "rambler", "Rambling", "reserved", "Self-assured", "stoked",
+    "unenthusiastic", "Unexcited", "upbeat"
+  ),
+  openness = c(
+    "Artistic", "artistic", "Artsy", "artsy", "create",
+    "Creative", "creative", "Curious", "curious", "dreamer",
+    "dreamy", "eccentric", "explorative", "Imaginative", "imaginative",
+    "inquisitive", "Inspiration", "inspiring", "inspirtional", "interest",
+    "Interested", "interested", "Intrigued", "intrigued", "Intuitive",
+    "Metaphor", "open", "Pensive", "Poetic", "poetic",
+    "Poetry", "poetry", "Reflecting", "reflecting", "Reflection",
+    "reflection", "shallow", "thinker", "thoughful", "Thoughtful",
+    "thoughtful", "unconventional", "Unique", "unique", "versatile",
+    "vision", "Vivid", "vivid", "witty", "wonder"
+  ),
+  emo_stab = c(
+    "Calm", "calm", "Calming", "calming", "certain",
+    "Collected", "composed", "content", "emotional", "emotionless",
+    "erratic", "even", "even-toned", "hesitant", "hopeful",
+    "Mellow", "mellow", "moody", "nervous", "Neutral",
+    "neutral", "neutral mindset", "non-assertive", "non-emotional", "non-serious",
+    "nonchalant", "Peace", "peace", "relaxation", "Relaxed",
+    "relaxed", "Relaxing", "relaxing", "relaxing.", "safe",
+    "Scattered", "serene", "Serenity", "serenity", "Serious",
+    "serious", "sootheing", "Soothing", "soothing", "Steady",
+    "steady", "stern", "Stoic", "stoic", "tranquil",
+    "Unemotional", "unemotional", "unrushed", "unsure", "wistful"
+  ),
+  cons = c(
+    "Accurate", "accurate", "attention", "Attentive", "Carefree",
+    "carefree", "careful", "cautious", "consistent", "Definite",
+    "Deliberate", "deliberate", "diligent", "Driven", "focus",
+    "Focused", "focused", "Intent", "invested", "involved",
+    "Measured", "Motivated", "motivated", "Observant", "observant",
+    "proper", "punctuated", "punctuates", "Rehearsed", "sequential",
+    "wasteful", "well-paced"
+  ),
+  other_psych = c(
+    "Amused", "Angry", "angry", "attitude", "awe",
+    "bold", "brave", "disinterested", "Euphoric", "excited with word",
+    "exciting", "fanatic", "Free", "Freedom", "Happiness",
+    "happiness", "Happy", "happy", "Hope", "hope",
+    "important", "jolly", "joy", "Joyful", "life",
+    "Longing", "Magical", "Motivation", "proud", "spiritual",
+    "unaware", "Upset"
+  ),
+  Naturalness = c(
+    "AI", "Ai", "ai", "Ai generated", "Artificial",
+    "artificial", "authentic", "automatic", "believable", "Computer",
+    "digital", "Fake", "fake", "fake?", "Forced",
+    "forced", "Genuine", "Human", "human like", "inauthentic",
+    "inhuman", "manufactured", "natural", "real", "robot",
+    "Robotic", "robotic", "Scripted", "Technological", "unnatural",
+    "Unrealistic", "unrealistic"
+  ),
+  contour = c(
+    "emphasis", "Flat", "flat", "flat tone", "high",
+    "high pitched", "high-pitched", "higher pitch voice", "low", "modulated",
+    "Monotone", "monotone", "Monotoned", "Monotonous", "monotonous",
+    "Neutral tone", "question", "Questioning", "questioning", "range",
+    "Slow tone", "tone"
+  ),
+  voice_qual = c(
+    "Audible", "audible", "bassy", "breathy", "Bright",
+    "bright", "chocolate", "clarity", "Clear", "clear",
+    "clear voice", "cler", "crisp", "Dainty", "Deep",
+    "deep", "deep voice", "distinct", "dry", "earthy",
+    "fluid", "grainy", "Grating", "grating", "gravelly",
+    "Gruff", "gruff", "gruffy", "Harsh", "Hoarse",
+    "liquid", "Nasal", "nasal", "nasally", "Nasaly",
+    "Raspy", "raspy", "Rough", "rough", "scratchy",
+    "shrill", "Smooth", "smooth", "sound", "subtle",
+    "twang", "vocal", "Vocal fry", "voice", "Warm",
+    "warm", "weathered", "whine"
+  ),
+  intensity = c(
+    "commanding", "explosive", "Firm", "firm", "forceful",
+    "Full", "Intense", "intense", "Loud", "loud",
+    "louder", "Powerful", "Projective", "Slam", "Soft",
+    "soft", "Soft Spoken", "Soft spoken", "Soft-spoken", "soft-spoken",
+    "softspoken", "Strong", "strong"
+  ),
+  other_speech = c(
+    "Articulated", "breaks", "brisk", "cadence", "clunky",
+    "coherent", "Direct", "direct", "embelished", "Embellished",
+    "emotive", "enunciation", "Fast", "fast", "flowing",
+    "hurry", "incomplete", "jumbled", "lyrical", "narrative",
+    "notecards", "Paced", "quick", "rapid", "Reading",
+    "reading", "rushed", "rushing", "Slow", "slow",
+    "slower", "Speech", "split", "splits", "Spoken",
+    "stilted", "straightforward", "Unclear", "Word", "wordy"
+  ),
+  evaluation = c(
+    "amazing", "Annoying", "annoying", "Average", "average",
+    "Bad", "bland", "Bombastic", "bombastic", "bored",
+    "Boring", "boring", "cliched", "confusing", "Cool",
+    "cool", "corny", "Crazy", "credible", "Different",
+    "Dig", "Dramatic", "dramatic", "Dull", "dumb",
+    "easy", "Exaggerated", "exaggerated", "excellent communication", "fine",
+    "Forgettable", "Fun", "fun", "Funny", "funny",
+    "Good", "good", "goofy", "great speaker", "Humorous",
+    "Idiot", "incorrect", "Interesting", "interesting", "intersting",
+    "irritating", "lackluster", "nondescript", "obnoxious", "odd",
+    "off-putting", "okay", "Outstanding", "outstanding", "Pleasant",
+    "pleasant", "pleasent", "Positive", "positive", "pretentious",
+    "Prison", "prison", "Promise", "quality", "Silly",
+    "silly", "Simple", "simple", "Snooty", "spectacle",
+    "Strange", "strange", "stupid", "Suspense", "Tiring",
+    "trap", "uncomfortable", "unfavorable", "Unintelligent", "unintelligent",
+    "uninteresting", "uninteristing", "unlikable", "unpleasant", "unprofessional",
+    "untenable", "usual", "vague", "weird", "Wonderful!"
+  )
+)
+
+
+assign_category <- function(response) {
+  if (is.na(response) || response == "") return(NA_character_)
+  for (cat_name in names(categories)) {
+    if (response %in% categories[[cat_name]]) {
+      return(cat_name)
+    }
+  }
+  return("unknown")
+}
+
+analysis_df <- raw_df %>%
+  mutate(across(
+    .cols = c(word_1, word_2, word_3, word_4, word_5),
+    .fns  = ~ sapply(tolower(trimws(.x)), assign_category),
+    .names = "category_{.col}"
+  )) %>%
+  rename_with(~ gsub("category_word_", "category_", .x), starts_with("category_word_"))
+
+# add broad characterizations
+#social_cats   <- c("gender","age","personality","competence","persona",
+#                   "appearance","locale","affect")
+#acoustic_cats <- c("voice_quality","prosody","intensity")
+
+#analysis_df <- analysis_df %>%
+#  rowwise() %>%
+#  mutate(
+#    n_social   = sum(c_across(category_1:category_5) %in% social_cats),
+#    n_acoustic = sum(c_across(category_1:category_5) %in% acoustic_cats),
+#    n_content  = sum(c_across(category_1:category_5) == "content"),
+#    any_artificial = any(c_across(word_1:word_5) %in% 
+#                           c("fake","artificial","ai generated","digital","inauthentic",
+#                             "manufactured","robotic","scripted","unrealistic"))
+#  ) %>%
+#  ungroup()
+```
+
+## Data Analysis - Across Speakers
+
+```{r}
+ggplot(analysis_df, aes(x = ai_score, 
+                        y = humanness_rating)) +
+  geom_point(color = "black", 
+             size = 3,
+             alpha = 0.75) +       
+  geom_smooth(method = "lm", color = "red") +
+  theme_minimal() 
+
+cor(analysis_df$ai_score, analysis_df$humanness_rating, method = "pearson")
+```
+
+Humanness rating is minimally correlated with AI attitude score (Pearson's r = 0.096).
+
+## Data Analysis - By Speaker
+
+```{r}
+analysis_df %>% 
+  group_by(voice) %>% 
+  summarise(
+    mean = mean(humanness_rating),
+    sd = sd(humanness_rating), 
+    median = median(humanness_rating)
+  )
+```
+
+```{r}
+valence_counts_voice <- analysis_df %>%
+  select(subject_id, word_1:word_5, voice) %>%
+  pivot_longer(word_1:word_5, names_to = "slot", values_to = "word") %>%
+  mutate(word = tolower(trimws(word))) %>%
+  left_join(valence_lookup, by = "word") %>%
+  group_by(voice) %>%
+  summarise(
+    n_positive  = sum(valence == "positive",  na.rm = TRUE),
+    n_negative  = sum(valence == "negative",  na.rm = TRUE),
+    n_ambiguous = sum(valence == "ambiguous", na.rm = TRUE),
+    .groups = "drop"
+  )
+valence_counts_voice
+```
+
+visualizations
+
+```{r}
+
+ggplot(analysis_df, aes(voice, humanness_rating, fill = voice)) + 
+  geom_violin() +
+  scale_fill_brewer(palette = "Set3") +
+  geom_jitter(width = 0.05) +
+  theme_minimal()
+
+```
+
+```{r}
+long_df %>% 
+  filter(cat != "content") %>% 
+  ggplot() +
+  geom_bar(aes(y = voice,
+               fill = cat),
+           position = "fill") +
+  coord_flip() +
+  labs(x = "Proportion of Non-Content Responses",
+       y = "Voice",
+       fill = "Category")
+
+ggsave(file="./data_analysis_files/by-voice-categories.png",width=10,height=6)
+```
+
+## Sankey prep
+
+```{r}
+category_counts <- analysis_df %>%
+  pivot_longer(
+    cols = category_1:category_5,
+    names_to = "word_number",
+    values_to = "category"
+  ) %>%
+  count(category, sort = TRUE)
+```
+
+```{r}
+View(category_counts)
+```
+
+## AI attitude
+
+add a col for averaged AI attitude per listener
+
+```{r}
+analysis_df <- analysis_df %>%
+  rowwise() %>%
+  mutate(ai_attitude_score = rowMeans(across(c(cognitive_1, behavioral_1, affective_1, cognitive_2, affective_2, behavioral_2))))
+```
+
+```{r}
+
+ai_attitude_plot <- ggplot(analysis_df, aes(x = ai_attitude_score, y = fct_reorder(source_file, ai_attitude_score))) +
+  geom_point(size = 1.5, alpha = 0.7) +
+  labs(x = "AI attitude score", y = "participants") + 
+  theme_minimal() +
+  theme(axis.text.y = element_blank())
+```
+
+```{r}
+ai_attitude_plot
+```
+
+Density + box (i dont really like this)
+
+```{r}
+ggplot(analysis_df, aes(x = ai_attitude_score)) +
+  geom_histogram(aes(y = after_stat(density)), 
+                 fill = "steelblue", 
+                 color = "white", 
+                 alpha = 0.4,
+                 bins = 30) +       
+  geom_density(fill = "skyblue", alpha = 0.5) +
+  labs(title = "Distribution of AI Attitude Scores", x = "AI Attitude Score", y = "Density") +
+  theme_minimal()
+```
+
+```{r}
+ggplot(analysis_df, aes(x = "", y = ai_attitude_score)) +
+  geom_boxplot(fill = "lightpink", alpha = 0.5, width = 0.3) +
+  labs(title = "Distribution of AI Attitude Scores", 
+       x = "All participants") +
+  geom_jitter(width = 0.05)+
+  theme_minimal()
+```
+
+## Question: Social attributions persist, even at low humanness?
+
+```{r}
+long_df <- analysis_df %>%
+  pivot_longer(category_1:category_5, names_to="slot", values_to="cat") %>%
+  filter(cat != "content") %>%
+  mutate(is_social = cat %in% social_cats,
+         slot_num = as.integer(gsub("category_","",slot)))
+
+subj_df <- long_df %>% # subject-clustering accounts for between-subj design
+  group_by(subject_id, voice, humanness_rating) %>%
+  summarise(n_social = sum(is_social), n_total = n(), .groups="drop")
+
+# models for pilot data (random effects result in singularity)
+m_social_1 <- glm(cbind(n_social, n_total - n_social) ~ scale(humanness_rating) + voice,
+              data = subj_df, family = binomial)
+summary(m_social_1)
+
+m_social_2 <- glm(cbind(n_social, n_total - n_social) ~ scale(humanness_rating),
+                  data = subj_df, family = binomial)
+summary(m_social_2)
+
+# which model better accounts for variance? 
+anova(m_social_1, m_social_2, test = "LRT")
+```
+
+Model results suggest that perceived humanness modulates the attribution of social descriptors, such that higher "humanness" ratings positively predict a greater rate of social descriptors (β = 0.46, p \< .001).
+
+Adding voice as a fixed effect did not attenuate the humanness slope (β = 0.61, p \< .001), and voice did not improve model fit (LRT p = .21), indicating the effect of humanness is not driven by stimulus-specific variation
+
+Note: Because the design was between subjects, I modeled social attribution at the participant level rather than the descriptor level. For each participant, I computed the number of non-content descriptors that could be described as "social" (gender, age, personality, competence, persona, appearance, locale, affect) our of the total non-content descriptors produced, and then I fit a binomial GLM predicting this proportion from z-scored humanness rating.
+
+```{r}
+# predicted probabilities
+newdat <- data.frame(humanness_rating = c(0, 30, 50, 66.6, 100))
+newdat$z <- (newdat$humanness_rating - mean(analysis_df$humanness_rating)) / 
+  sd(analysis_df$humanness_rating)
+pred <- predict(m_social_2, newdata = data.frame(humanness_rating = newdat$humanness_rating),
+                type = "link", se.fit = TRUE)
+newdat$p     <- plogis(pred$fit)
+newdat$lo    <- plogis(pred$fit - 1.96 * pred$se.fit)
+newdat$hi    <- plogis(pred$fit + 1.96 * pred$se.fit)
+newdat
+
+newdat <- data.frame(humanness_rating = seq(0, 100, by = 2))
+pred <- predict(m_social_2, newdata = data.frame(humanness_rating = newdat$humanness_rating,
+                                             voice = "gracie_valley"),  # arbitrary ref level
+                type = "link", se.fit = TRUE)
+newdat$p  <- plogis(pred$fit)
+newdat$lo <- plogis(pred$fit - 1.96 * pred$se.fit)
+newdat$hi <- plogis(pred$fit + 1.96 * pred$se.fit)
+
+# visualization
+ggplot() +
+  geom_ribbon(data = newdat, aes(humanness_rating, ymin = lo, ymax = hi), 
+              alpha = 0.2, fill = "steelblue") +
+  geom_line(data = newdat, aes(humanness_rating, p), color = "steelblue", size = 1) +
+  geom_jitter(data = subj_df, 
+              aes(humanness_rating, n_social / n_total),
+              width = 0.5, height = 0.02, alpha = 0.5) +
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "grey") +
+  labs(x = "Humanness Rating", 
+       y = "P(social or psychological | non-content descriptor)") +
+  theme_minimal()
+```
+
+Social attribution rate remained substantial across the humanness range, even for voices rated near the bottom of the scale, roughly 37–49% of non-content descriptors were social, well above a floor of zero.
+
+## Question: Transition Probabilities?
+
+```{r}
+transitions <- analysis_df %>%
+  select(subject_id, voice, category_1:category_5) %>%
+  pivot_longer(category_1:category_5, names_to="slot", values_to="cat") %>%
+  mutate(slot = as.integer(gsub("category_","",slot))) %>%
+  filter(cat != "content") %>%
+  arrange(subject_id, slot) %>%
+  group_by(subject_id) %>%
+  mutate(next_cat = lead(cat)) %>%
+  filter(!is.na(next_cat)) %>%
+  ungroup()
+
+# raw transition probability matrix
+trans_mat <- transitions %>%
+  count(cat, next_cat) %>%
+  group_by(cat) %>%
+  mutate(p = n / sum(n)) %>%
+  ungroup()
+
+# add marginal probabilities 
+marginals <- transitions %>%
+  count(next_cat) %>%
+  mutate(p_marginal = n / sum(n)) %>%
+  select(next_cat, p_marginal)
+
+# matrix with marginals 
+trans_mat_w_margin <- trans_mat %>%
+  left_join(marginals, by = "next_cat") %>%
+  mutate(lift = p / p_marginal)
+```
+
+Unsure what exactly to make of this. There is some same-category momentum (competence -\> competence; persona -\> persona; affect -\> affect; personality -\> personality). This probably reflects some sort of participant response strategy. There also seems to be a broader pattern of acoustics –\> social.
+
+Perhaps these can be framed as predictions about what patterns we will observe in the larger dataset (once collected)?
+
+## Question: AI attitude as predictor?
+
+```{r}
+valence_lookup <- tibble(
+  word = c(
+    "beautiful", "pleasant", "cool", "fun", "dreamy", "vivid", "colorful",
+    "annoying", "boring", "grating", "tiring", "forgettable", "odd", "corny", "confusing",
+    "interesting", "dramatic", "emotive", "exaggerated"
+  ),
+  valence = c(
+    rep("positive", 7),
+    rep("negative", 8),
+    rep("ambiguous", 4)
+  )
+)
+
+# participant valence_counts
+valence_counts <- analysis_df %>%
+  select(subject_id, word_1:word_5) %>%
+  pivot_longer(word_1:word_5, names_to = "slot", values_to = "word") %>%
+  mutate(word = tolower(trimws(word))) %>%
+  left_join(valence_lookup, by = "word") %>%
+  group_by(subject_id) %>%
+  summarise(
+    n_positive  = sum(valence == "positive",  na.rm = TRUE),
+    n_negative  = sum(valence == "negative",  na.rm = TRUE),
+    n_ambiguous = sum(valence == "ambiguous", na.rm = TRUE),
+    .groups = "drop"
+  )
+
+eval_df <- analysis_df %>% left_join(valence_counts, by = "subject_id")
+
+# restrict to subj with at least one valenced evaluation
+eval_sub <- eval_df %>%
+  filter(n_positive + n_negative > 0) %>%
+  mutate(p_positive = n_positive / (n_positive + n_negative))
+
+# mean proportion positive by any_artificial
+prop_summary <- eval_sub %>%
+  group_by(any_artificial) %>%
+  summarise(
+    n              = n(),
+    mean_p_positive = mean(p_positive),
+    sd_p_positive   = sd(p_positive),
+    se_p_positive   = sd(p_positive) / sqrt(n),
+    .groups = "drop"
+  )
+prop_summary
+
+# mean ai_score by any_artificial
+ai_summary <- eval_sub %>%
+  group_by(any_artificial) %>%
+  summarise(
+    n              = n(),
+    mean_ai_score  = mean(ai_score),
+    sd_ai_score    = sd(ai_score),
+    se_ai_score    = sd(ai_score) / sqrt(n),
+    .groups = "drop"
+  )
+ai_summary
+
+ggplot(eval_sub, aes(x = ai_score, 
+                     y = p_positive, 
+                     color = any_artificial)) +
+  geom_point(alpha = 0.7, size = 2) +
+  geom_smooth(method = "loess", se = TRUE, alpha = 0.15) +
+  scale_color_brewer(palette = "Set1",
+                     name = "Any artificial\ndescriptor") +
+  labs(
+    x = "AI attitude score (higher = more positive toward AI)",
+    y = "Proportion positive valence") +
+  theme_minimal()
+```
+
+Results inconclusive. Heavily lacking any cases of artificial descriptions paired with valenced evaluations.
+
+```{r}
+glm(p_positive ~ scale(humanness_rating)*scale(ai_score), 
+    data = eval_sub,
+    family = binomial) %>%
+  summary()
+```
+
+## word cloud prep
+
+(includes content words...)
+
+```{r}
+gracie_words <- analysis_df %>% filter(voice == "gracie_valley")
+gracie_words <- gracie_words[,c("word_1", "word_2", "word_3", "word_4", "word_5")]
+gracie_words_lst <- unlist(gracie_words) %>% as.character()
+write_clip(gracie_words_lst)
+```
+
+```{r}
+vince_words <- analysis_df %>% filter(voice == "vince_duglus")
+vince_words <- vince_words[,c("word_1", "word_2", "word_3", "word_4", "word_5")]
+vince_words_lst <- unlist(vince_words) %>% as.character()
+write_clip(vince_words_lst)
+```
