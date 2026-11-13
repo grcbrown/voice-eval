@@ -531,7 +531,7 @@ Note: Because the design was between subjects, I modeled social/phys/psych attri
 newdat <- data.frame(humanness_rating = c(0, 30, 50, 66.6, 100))
 newdat$z <- (newdat$humanness_rating - mean(analysis_df$humanness_rating)) / 
   sd(analysis_df$humanness_rating)
-pred <- predict(m_social_2, newdata = data.frame(humanness_rating = newdat$humanness_rating),
+pred <- predict(m_social_1, newdata = data.frame(humanness_rating = newdat$humanness_rating),
                 type = "link", se.fit = TRUE)
 newdat$p     <- plogis(pred$fit)
 newdat$lo    <- plogis(pred$fit - 1.96 * pred$se.fit)
@@ -539,7 +539,7 @@ newdat$hi    <- plogis(pred$fit + 1.96 * pred$se.fit)
 newdat
 
 newdat <- data.frame(humanness_rating = seq(0, 100, by = 2))
-pred <- predict(m_social_2, newdata = data.frame(humanness_rating = newdat$humanness_rating,
+pred <- predict(m_social_1, newdata = data.frame(humanness_rating = newdat$humanness_rating,
                                              voice = "gracie_valley"),  # arbitrary ref level
                 type = "link", se.fit = TRUE)
 newdat$p  <- plogis(pred$fit)
@@ -560,7 +560,7 @@ ggplot() +
   theme_minimal()
 ```
 
-Social attribution rate remained substantial across the humanness range, even for voices rated near the bottom of the scale, roughly 37–49% of non-content descriptors were social, well above a floor of zero.
+Social/psych/phys attribution rate remained substantial across the humanness range, even for voices rated near the bottom of the scale, roughly 60–73% of non-content descriptors were social/psych/phys, well above a floor of zero.
 
 ## Question: Transition Probabilities?
 
