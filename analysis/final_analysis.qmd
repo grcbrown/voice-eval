@@ -415,13 +415,16 @@ analysis_df %>%
 visualizations
 
 ```{r}
-
-ggplot(analysis_df, aes(voice, humanness_rating, fill = voice)) + 
-  geom_violin() +
-  scale_fill_brewer(palette = "Set3") +
-  geom_jitter(width = 0.05) +
-  theme_minimal()
-
+ggplot(analysis_df, aes(
+  x = voice, 
+  y = humanness_rating, 
+  fill = voice)) + 
+  geom_violin(alpha = 0.7) +
+  geom_jitter(width = 0.1, alpha = 0.4, size = 1) +
+  scale_fill_viridis_d(option = "turbo") + 
+  coord_flip() + 
+  theme_minimal() +
+  theme(legend.position = "none")
 ```
 
 ```{r}
@@ -431,13 +434,42 @@ long_df %>%
   geom_bar(aes(y = voice,
                fill = cat),
            position = "fill") +
-  coord_flip() +
   labs(x = "Proportion of Non-Content Responses",
        y = "Voice",
-       fill = "Category")
+       fill = "Category") + 
+  theme(
+    legend.text = element_text(size = 6), 
+    legend.key.size = unit(0.3, "cm"),       
+    legend.margin = margin(0, 0, 0, 0)    
+  )
 
 ggsave(file="./data_analysis_files/by-voice-categories.png",width=10,height=6)
 ```
+
+```{r}
+long_df %>% 
+  filter(cat != "content") %>% 
+  mutate(higher_order_cat = case_when(
+    cat %in% social_cats ~ "Social",
+    cat %in% phys_cats ~ "Physical",
+    cat %in% psych_cats ~ "Psychological",
+    cat %in% speech_cats ~ "Speech",
+    TRUE ~ "Other" 
+  )) %>%
+  ggplot() +
+  geom_bar(aes(y = voice, fill = higher_order_cat), position = "fill") +
+  labs(
+    x = "Proportion of Non-Content Responses",
+    y = "Voice",
+    fill = "Category Type"
+  ) + 
+  theme(
+    legend.text = element_text(size = 6), 
+    legend.key.size = unit(0.3, "cm"),       
+    legend.margin = margin(0, 0, 0, 0)    
+  )
+```
+
 
 ## Sankey prep
 
