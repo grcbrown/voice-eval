@@ -885,6 +885,7 @@ write_clip(vince_words_lst)
 zuri_words <- analysis_df %>% filter(voice == "zuri")
 zuri_words <- zuri_words[,c("word_1", "word_2", "word_3", "word_4", "word_5")]
 zuri_words_lst <- unlist(zuri_words) %>% as.character()
+zuri_words_lst <- zuri_words_lst[!tolower(trimws(zuri_words_lst)) %in% categories$content]
 write_clip(zuri_words_lst)
 ```
 
@@ -892,5 +893,71 @@ write_clip(zuri_words_lst)
 john_words <- analysis_df %>% filter(voice == "john")
 john_words <- john_words[,c("word_1", "word_2", "word_3", "word_4", "word_5")]
 john_words_lst <- unlist(john_words) %>% as.character()
+john_words_lst <- john_words_lst[!tolower(trimws(john_words_lst)) %in% categories$content]
 write_clip(john_words_lst)
+```
+
+```{r}
+grampa_words <- analysis_df %>% filter(voice == "grampa_werthers")
+grampa_words <- grampa_words[,c("word_1", "word_2", "word_3", "word_4", "word_5")]
+grampa_words_lst <- unlist(grampa_words) %>% as.character()
+grampa_words_lst <- grampa_words_lst[!tolower(trimws(grampa_words_lst)) %in% categories$content]
+write_clip(grampa_words_lst)
+```
+
+```{r}
+scypher_words <- analysis_df %>% filter(voice == "scypher")
+scypher_words <- scypher_words[,c("word_1", "word_2", "word_3", "word_4", "word_5")]
+scypher_words_lst <- unlist(scypher_words) %>% as.character()
+scypher_words_lst <- scypher_words_lst[!tolower(trimws(scypher_words_lst)) %in% categories$content]
+write_clip(scypher_words_lst)
+```
+
+```{r}
+geraldine_words <- analysis_df %>% filter(voice == "geraldine_wallace")
+geraldine_words <- geraldine_words[,c("word_1", "word_2", "word_3", "word_4", "word_5")]
+geraldine_words_lst <- unlist(geraldine_words) %>% as.character()
+geraldine_words_lst <- geraldine_words_lst[!tolower(trimws(geraldine_words_lst)) %in% categories$content]
+write_clip(geraldine_words_lst)
+```
+
+```{r}
+campfire_words <- analysis_df %>% filter(voice == "campfire_narrator")
+campfire_words <- campfire_words[,c("word_1", "word_2", "word_3", "word_4", "word_5")]
+campfire_words_lst <- unlist(campfire_words) %>% as.character()
+campfire_words_lst <- campfire_words_lst[!tolower(trimws(campfire_words_lst)) %in% categories$content]
+write_clip(campfire_words_lst)
+```
+
+```{r}
+
+dorothy_words <- analysis_df %>% filter(voice == "dorothy")
+dorothy_words <- dorothy_words[,c("word_1", "word_2", "word_3", "word_4", "word_5")]
+dorothy_words_lst <- unlist(dorothy_words) %>% as.character()
+dorothy_words_lst <- dorothy_words_lst[!tolower(trimws(dorothy_words_lst)) %in% categories$content]
+write_clip(dorothy_words_lst)
+```
+
+```{r}
+whytee_words <- analysis_df %>% filter(voice == "whytee")
+whytee_words <- whytee_words[,c("word_1", "word_2", "word_3", "word_4", "word_5")]
+whytee_words_lst <- unlist(whytee_words) %>% as.character()
+whytee_words_lst <- whytee_words_lst[!tolower(trimws(whytee_words_lst)) %in% categories$content]
+write_clip(whytee_words_lst)
+```
+
+```{r}
+boston_words <- analysis_df %>% filter(voice == "boston_bob")
+boston_words <- boston_words[,c("word_1", "word_2", "word_3", "word_4", "word_5")]
+boston_words_lst <- unlist(boston_words) %>% as.character()
+boston_words_lst <- boston_words_lst[!tolower(trimws(boston_words_lst)) %in% categories$content]
+write_clip(boston_words_lst)
+```
+
+```{r}
+brother_words <- analysis_df %>% filter(voice == "brother_wayne")
+brother_words <- brother_words[,c("word_1", "word_2", "word_3", "word_4", "word_5")]
+brother_words_lst <- unlist(brother_words) %>% as.character()
+brother_words_lst <- brother_words_lst[!tolower(trimws(brother_words_lst)) %in% categories$content]
+write_clip(brother_words_lst)
 ```
