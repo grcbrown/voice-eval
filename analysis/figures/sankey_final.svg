@@ -1,0 +1,198 @@
+<svg height="1000" width="800" xmlns="http://www.w3.org/2000/svg">
+<title>Your Diagram Title</title>
+<!-- Generated with SankeyMATIC: 11/14/2026, 5:02:21 PM -->
+<rect height="1000" width="800" fill="#ffffff"></rect>
+<g transform="translate(102.7216,18)">
+<g id="sankey_flows">
+<path id="flow5" d="M8 728.06514C65.33 728.06514 211.2609 761.29604 268.5909 761.29604" fill="none" stroke-width="331.69683" stroke="#FFE293" opacity="0.45"><title>Total → content: 1,091</title></path>
+<path id="flow0" d="M8 189.93187C65.33 189.93187 211.2609 143.13436 268.5909 143.13436" fill="none" stroke-width="222.246" stroke="#FFE293" opacity="0.45"><title>Total → Psychology: 731</title></path>
+<path id="flow4" d="M8 517.5243C65.33 517.5243 211.2609 534.74952 268.5909 534.74952" fill="none" stroke-width="89.38485" stroke="#FFE293" opacity="0.45"><title>Total → Speech: 294</title></path>
+<path id="flow1" d="M8 339.21065C65.33 339.21065 211.2609 308.41882 268.5909 308.41882" fill="none" stroke-width="76.31155" stroke="#FFE293" opacity="0.45"><title>Total → Social: 251</title></path>
+<path id="flow7" d="M276.5909 61.19825C333.9209 61.19825 479.8518 29.18689 537.1818 29.18689" fill="none" stroke-width="58.37378" stroke="#1f77b4" opacity="0.45"><title>Psychology → agreeableness: 192</title></path>
+<path id="flow2" d="M8 404.12107C65.33 404.12107 211.2609 389.33493 268.5909 389.33493" fill="none" stroke-width="53.5093" stroke="#FFE293" opacity="0.45"><title>Total → SGI: 176</title></path>
+<path id="flow19" d="M276.5909 388.87888C333.9209 388.87888 479.8518 516.92434 537.1818 516.92434" fill="none" stroke-width="52.59721" stroke="#2ca02c" opacity="0.45"><title>SGI → gender: 173</title></path>
+<path id="flow26" d="M276.5909 515.74763C333.9209 515.74763 479.8518 723.8215 537.1818 723.8215" fill="none" stroke-width="51.38109" stroke="#17becf" opacity="0.45"><title>Speech → voice_qual: 169</title></path>
+<path id="flow8" d="M276.5909 114.09949C333.9209 114.09949 479.8518 98.09381 537.1818 98.09381" fill="none" stroke-width="47.42869" stroke="#ff7f0e" opacity="0.45"><title>Psychology → extraversion: 156</title></path>
+<path id="flow9" d="M276.5909 137.81384v44.99645L537.1818 182.81029v-44.99645z" fill="#2ca02c" stroke-width="0.5" stroke="#2ca02c" opacity="0.45"><title>Psychology → emo_stab: 148</title></path>
+<path id="flow3" d="M8 430.87572v41.95615L268.5909 474.05141v-41.95615z" fill="#FFE293" stroke-width="0.5" stroke="#FFE293" opacity="0.45"><title>Total → Physical: 138</title></path>
+<path id="flow10" d="M276.5909 201.35613C333.9209 201.35613 479.8518 217.36181 537.1818 217.36181" fill="none" stroke-width="37.09167" stroke="#d62728" opacity="0.45"><title>Psychology → openness: 122</title></path>
+<path id="flow22" d="M276.5909 449.12094C333.9209 449.12094 479.8518 609.17776 537.1818 609.17776" fill="none" stroke-width="34.05137" stroke="#8c564b" opacity="0.45"><title>Physical → age: 112</title></path>
+<path id="flow13" d="M276.5909 284.85649C333.9209 284.85649 479.8518 332.87353 537.1818 332.87353" fill="none" stroke-width="29.18689" stroke="#e377c2" opacity="0.45"><title>Social → persona: 96</title></path>
+<path id="flow6" d="M8 903.33849C65.33 903.33849 211.2609 952.57507 268.5909 952.57507" fill="none" stroke-width="18.84987" stroke="#FFE293" opacity="0.45"><title>Total → other: 62</title></path>
+<path id="flow11" d="M276.5909 228.87085C333.9209 228.87085 479.8518 260.88221 537.1818 260.88221" fill="none" stroke-width="17.93778" stroke="#9467bd" opacity="0.45"><title>Psychology → other_psych: 59</title></path>
+<path id="flow14" d="M276.5909 308.26681C333.9209 308.26681 479.8518 372.28953 537.1818 372.28953" fill="none" stroke-width="17.63375" stroke="#7f7f7f" opacity="0.45"><title>Social → region: 58</title></path>
+<path id="flow12" d="M276.5909 246.04855C333.9209 246.04855 479.8518 294.06559 537.1818 294.06559" fill="none" stroke-width="16.41763" stroke="#8c564b" opacity="0.45"><title>Psychology → cons: 54</title></path>
+<path id="flow27" d="M276.5909 549.03893C333.9209 549.03893 479.8518 773.11848 537.1818 773.11848" fill="none" stroke-width="15.2015" stroke="#1f77b4" opacity="0.45"><title>Speech → speech_rhythm: 50</title></path>
+<path id="flow15" d="M276.5909 324.53242C333.9209 324.53242 479.8518 404.56082 537.1818 404.56082" fill="none" stroke-width="14.89747" stroke="#bcbd22" opacity="0.45"><title>Social → race_ethnicity: 49</title></path>
+<path id="flow28" d="M276.5909 564.08842C333.9209 564.08842 479.8518 804.17365 537.1818 804.17365" fill="none" stroke-width="14.89747" stroke="#ff7f0e" opacity="0.45"><title>Speech → contour: 49</title></path>
+<path id="flow29" d="M276.5909 575.48955C333.9209 575.48955 479.8518 831.58046 537.1818 831.58046" fill="none" stroke-width="7.90478" stroke="#2ca02c" opacity="0.45"><title>Speech → other_speech: 26</title></path>
+<path id="flow16" d="M276.5909 335.62951C333.9209 335.62951 479.8518 431.6636 537.1818 431.6636" fill="none" stroke-width="7.29672" stroke="#17becf" opacity="0.45"><title>Social → other_soc: 24</title></path>
+<path id="flow17" d="M276.5909 341.40609C333.9209 341.40609 479.8518 453.44586 537.1818 453.44586" fill="none" stroke-width="4.25642" stroke="#1f77b4" opacity="0.45"><title>Social → locale: 14</title></path>
+<path id="flow23" d="M276.5909 467.81879C333.9209 467.81879 479.8518 643.88129 537.1818 643.88129" fill="none" stroke-width="3.34433" stroke="#e377c2" opacity="0.45"><title>Physical → appearance: 11</title></path>
+<path id="flow18" d="M276.5909 345.05445C333.9209 345.05445 479.8518 473.0999 537.1818 473.0999" fill="none" stroke-width="3.0403" stroke="#ff7f0e" opacity="0.45"><title>Social → social_standing: 10</title></path>
+<path id="flow24" d="M276.5909 470.85909C333.9209 470.85909 479.8518 662.92728 537.1818 662.92728" fill="none" stroke-width="2.73627" stroke="#7f7f7f" opacity="0.45"><title>Physical → health: 9</title></path>
+<path id="flow25" d="M276.5909 473.13932C333.9209 473.13932 479.8518 681.21318 537.1818 681.21318" fill="none" stroke-width="1.82418" stroke="#bcbd22" opacity="0.45"><title>Physical → attractiveness: 6</title></path>
+<path id="flow20" d="M276.5909 415.48151C333.9209 415.48151 479.8518 559.53265 537.1818 559.53265" fill="none" stroke-width="1" stroke="#d62728" opacity="0.45"><title>SGI → sexuality: 2</title></path>
+<path id="flow21" d="M276.5909 415.93756C333.9209 415.93756 479.8518 575.99438 537.1818 575.99438" fill="none" stroke-width="1" stroke="#9467bd" opacity="0.45"><title>SGI → other_sgi: 1</title></path>
+</g>
+<g id="sankey_nodes">
+<g class="node">
+<rect id="r0" class="for_r0" x="0" y="78.80887" height="833.95455" width="8" fill="#FFE293" fill-opacity="1"><title>Total:
+2,743</title></rect>
+</g>
+<g class="node">
+<rect id="r1" class="for_r1" x="268.5909" y="32.01136" height="222.246" width="8" fill="#e9c46a" fill-opacity="1"><title>Psychology:
+731</title></rect>
+</g>
+<g class="node">
+<rect id="r2" class="for_r2" x="268.5909" y="270.26304" height="76.31155" width="8" fill="#e76f51" fill-opacity="1"><title>Social:
+251</title></rect>
+</g>
+<g class="node">
+<rect id="r3" class="for_r3" x="268.5909" y="362.58028" height="53.5093" width="8" fill="#8ab17d" fill-opacity="1"><title>SGI:
+176</title></rect>
+</g>
+<g class="node">
+<rect id="r4" class="for_r4" x="268.5909" y="432.09526" height="41.95615" width="8" fill="#b5838d" fill-opacity="1"><title>Physical:
+138</title></rect>
+</g>
+<g class="node">
+<rect id="r5" class="for_r5" x="268.5909" y="490.05709" height="89.38485" width="8" fill="#f4a261" fill-opacity="1"><title>Speech:
+294</title></rect>
+</g>
+<g class="node">
+<rect id="r6" class="for_r6" x="268.5909" y="595.44762" height="331.69683" width="8" fill="#2a9d8f" fill-opacity="1"><title>content:
+1,091</title></rect>
+</g>
+<g class="node">
+<rect id="r7" class="for_r7" x="268.5909" y="943.15013" height="18.84987" width="8" fill="#adb5bd" fill-opacity="1"><title>other:
+62</title></rect>
+</g>
+<g class="node">
+<rect id="r8" class="for_r8" x="537.1818" y="0" height="58.37378" width="8" fill="#1f77b4" fill-opacity="1"><title>agreeableness:
+192</title></rect>
+</g>
+<g class="node">
+<rect id="r9" class="for_r9" x="537.1818" y="74.37946" height="47.42869" width="8" fill="#ff7f0e" fill-opacity="1"><title>extraversion:
+156</title></rect>
+</g>
+<g class="node">
+<rect id="r10" class="for_r10" x="537.1818" y="137.81384" height="44.99645" width="8" fill="#2ca02c" fill-opacity="1"><title>emo_stab:
+148</title></rect>
+</g>
+<g class="node">
+<rect id="r11" class="for_r11" x="537.1818" y="198.81597" height="37.09167" width="8" fill="#d62728" fill-opacity="1"><title>openness:
+122</title></rect>
+</g>
+<g class="node">
+<rect id="r12" class="for_r12" x="537.1818" y="251.91332" height="17.93778" width="8" fill="#9467bd" fill-opacity="1"><title>other_psych:
+59</title></rect>
+</g>
+<g class="node">
+<rect id="r13" class="for_r13" x="537.1818" y="285.85678" height="16.41763" width="8" fill="#8c564b" fill-opacity="1"><title>cons:
+54</title></rect>
+</g>
+<g class="node">
+<rect id="r14" class="for_r14" x="537.1818" y="318.28009" height="29.18689" width="8" fill="#e377c2" fill-opacity="1"><title>persona:
+96</title></rect>
+</g>
+<g class="node">
+<rect id="r15" class="for_r15" x="537.1818" y="363.47266" height="17.63375" width="8" fill="#7f7f7f" fill-opacity="1"><title>region:
+58</title></rect>
+</g>
+<g class="node">
+<rect id="r16" class="for_r16" x="537.1818" y="397.11209" height="14.89747" width="8" fill="#bcbd22" fill-opacity="1"><title>race_ethnicity:
+49</title></rect>
+</g>
+<g class="node">
+<rect id="r17" class="for_r17" x="537.1818" y="428.01524" height="7.29672" width="8" fill="#17becf" fill-opacity="1"><title>other_soc:
+24</title></rect>
+</g>
+<g class="node">
+<rect id="r18" class="for_r18" x="537.1818" y="451.31765" height="4.25642" width="8" fill="#1f77b4" fill-opacity="1"><title>locale:
+14</title></rect>
+</g>
+<g class="node">
+<rect id="r19" class="for_r19" x="537.1818" y="471.57975" height="3.0403" width="8" fill="#ff7f0e" fill-opacity="1"><title>social_standing:
+10</title></rect>
+</g>
+<g class="node">
+<rect id="r20" class="for_r20" x="537.1818" y="490.62573" height="52.59721" width="8" fill="#2ca02c" fill-opacity="1"><title>gender:
+173</title></rect>
+</g>
+<g class="node">
+<rect id="r21" class="for_r21" x="537.1818" y="559.22862" height="0.60806" width="8" fill="#d62728" fill-opacity="1"><title>sexuality:
+2</title></rect>
+</g>
+<g class="node">
+<rect id="r22" class="for_r22" x="537.1818" y="575.84236" height="0.30403" width="8" fill="#9467bd" fill-opacity="1"><title>other_sgi:
+1</title></rect>
+</g>
+<g class="node">
+<rect id="r23" class="for_r23" x="537.1818" y="592.15208" height="34.05137" width="8" fill="#8c564b" fill-opacity="1"><title>age:
+112</title></rect>
+</g>
+<g class="node">
+<rect id="r24" class="for_r24" x="537.1818" y="642.20913" height="3.34433" width="8" fill="#e377c2" fill-opacity="1"><title>appearance:
+11</title></rect>
+</g>
+<g class="node">
+<rect id="r25" class="for_r25" x="537.1818" y="661.55914" height="2.73627" width="8" fill="#7f7f7f" fill-opacity="1"><title>health:
+9</title></rect>
+</g>
+<g class="node">
+<rect id="r26" class="for_r26" x="537.1818" y="680.30109" height="1.82418" width="8" fill="#bcbd22" fill-opacity="1"><title>attractiveness:
+6</title></rect>
+</g>
+<g class="node">
+<rect id="r27" class="for_r27" x="537.1818" y="698.13096" height="51.38109" width="8" fill="#17becf" fill-opacity="1"><title>voice_qual:
+169</title></rect>
+</g>
+<g class="node">
+<rect id="r28" class="for_r28" x="537.1818" y="765.51772" height="15.2015" width="8" fill="#1f77b4" fill-opacity="1"><title>speech_rhythm:
+50</title></rect>
+</g>
+<g class="node">
+<rect id="r29" class="for_r29" x="537.1818" y="796.72491" height="14.89747" width="8" fill="#ff7f0e" fill-opacity="1"><title>contour:
+49</title></rect>
+</g>
+<g class="node">
+<rect id="r30" class="for_r30" x="537.1818" y="827.62807" height="7.90478" width="8" fill="#2ca02c" fill-opacity="1"><title>other_speech:
+26</title></rect>
+</g>
+</g>
+<g id="sankey_labels" font-family="sans-serif" font-size="16px" fill="#000000">
+<text text-anchor="middle" x="297.2784" y="977" font-size="12.87169px" font-weight="400" fill="#336781">Made at SankeyMATIC.com</text>
+<text id="label0" class="for_r0" text-anchor="end" x="-6.29754" y="495.78615" font-weight="400" font-size="17.6px" dy="5.8">2,743 <tspan font-weight="400" font-size="14.4px">Total</tspan></text>
+<text id="label1" class="for_r1" text-anchor="end" x="262.29336" y="143.13436" font-weight="400" font-size="17.6px" dy="5.8">731 <tspan font-weight="400" font-size="14.4px">Psychology</tspan></text>
+<text id="label2" class="for_r2" text-anchor="end" x="262.29336" y="308.41882" font-weight="400" font-size="17.6px" dy="5.8">251 <tspan font-weight="400" font-size="14.4px">Social</tspan></text>
+<text id="label3" class="for_r3" text-anchor="end" x="262.29336" y="389.33493" font-weight="400" font-size="17.6px" dy="5.8">176 <tspan font-weight="400" font-size="14.4px">SGI</tspan></text>
+<text id="label4" class="for_r4" text-anchor="end" x="262.29336" y="453.07333" font-weight="400" font-size="17.6px" dy="5.8">138 <tspan font-weight="400" font-size="14.4px">Physical</tspan></text>
+<text id="label5" class="for_r5" text-anchor="end" x="262.29336" y="534.74952" font-weight="400" font-size="17.6px" dy="5.8">294 <tspan font-weight="400" font-size="14.4px">Speech</tspan></text>
+<text id="label6" class="for_r6" text-anchor="end" x="262.29336" y="761.29604" font-weight="400" font-size="17.6px" dy="5.8">1,091 <tspan font-weight="400" font-size="14.4px">content</tspan></text>
+<text id="label7" class="for_r7" text-anchor="end" x="262.29336" y="952.57507" font-weight="400" font-size="17.6px" dy="5.8">62 <tspan font-weight="400" font-size="14.4px">other</tspan></text>
+<text id="label8" class="for_r8" text-anchor="start" x="551.47934" y="29.18689" font-weight="400" font-size="17.6px" dy="5.8">192 <tspan font-weight="400" font-size="14.4px">agreeableness</tspan></text>
+<text id="label9" class="for_r9" text-anchor="start" x="551.47934" y="98.09381" font-weight="400" font-size="17.6px" dy="5.8">156 <tspan font-weight="400" font-size="14.4px">extraversion</tspan></text>
+<text id="label10" class="for_r10" text-anchor="start" x="551.47934" y="160.31206" font-weight="400" font-size="17.6px" dy="5.8">148 <tspan font-weight="400" font-size="14.4px">emo_stab</tspan></text>
+<text id="label11" class="for_r11" text-anchor="start" x="551.47934" y="217.36181" font-weight="400" font-size="17.6px" dy="5.8">122 <tspan font-weight="400" font-size="14.4px">openness</tspan></text>
+<text id="label12" class="for_r12" text-anchor="start" x="551.47934" y="260.88221" font-weight="400" font-size="17.6px" dy="5.8">59 <tspan font-weight="400" font-size="14.4px">other_psych</tspan></text>
+<text id="label13" class="for_r13" text-anchor="start" x="551.47934" y="294.06559" font-weight="400" font-size="17.6px" dy="5.8">54 <tspan font-weight="400" font-size="14.4px">cons</tspan></text>
+<text id="label14" class="for_r14" text-anchor="start" x="551.47934" y="332.87353" font-weight="400" font-size="17.6px" dy="5.8">96 <tspan font-weight="400" font-size="14.4px">persona</tspan></text>
+<text id="label15" class="for_r15" text-anchor="start" x="551.47934" y="372.28953" font-weight="400" font-size="17.6px" dy="5.8">58 <tspan font-weight="400" font-size="14.4px">region</tspan></text>
+<text id="label16" class="for_r16" text-anchor="start" x="551.47934" y="404.56082" font-weight="400" font-size="17.6px" dy="5.8">49 <tspan font-weight="400" font-size="14.4px">race_ethnicity</tspan></text>
+<text id="label17" class="for_r17" text-anchor="start" x="551.47934" y="431.6636" font-weight="400" font-size="17.6px" dy="5.8">24 <tspan font-weight="400" font-size="14.4px">other_soc</tspan></text>
+<text id="label18" class="for_r18" text-anchor="start" x="551.47934" y="453.44586" font-weight="400" font-size="17.6px" dy="5.8">14 <tspan font-weight="400" font-size="14.4px">locale</tspan></text>
+<text id="label19" class="for_r19" text-anchor="start" x="551.47934" y="473.0999" font-weight="400" font-size="17.6px" dy="5.8">10 <tspan font-weight="400" font-size="14.4px">social_standing</tspan></text>
+<text id="label20" class="for_r20" text-anchor="start" x="551.47934" y="516.92434" font-weight="400" font-size="17.6px" dy="5.8">173 <tspan font-weight="400" font-size="14.4px">gender</tspan></text>
+<text id="label21" class="for_r21" text-anchor="start" x="551.47934" y="559.53265" font-weight="400" font-size="17.6px" dy="5.8">2 <tspan font-weight="400" font-size="14.4px">sexuality</tspan></text>
+<text id="label22" class="for_r22" text-anchor="start" x="551.47934" y="575.99438" font-weight="400" font-size="17.6px" dy="5.8">1 <tspan font-weight="400" font-size="14.4px">other_sgi</tspan></text>
+<text id="label23" class="for_r23" text-anchor="start" x="551.47934" y="609.17776" font-weight="400" font-size="17.6px" dy="5.8">112 <tspan font-weight="400" font-size="14.4px">age</tspan></text>
+<text id="label24" class="for_r24" text-anchor="start" x="551.47934" y="643.88129" font-weight="400" font-size="17.6px" dy="5.8">11 <tspan font-weight="400" font-size="14.4px">appearance</tspan></text>
+<text id="label25" class="for_r25" text-anchor="start" x="551.47934" y="662.92728" font-weight="400" font-size="17.6px" dy="5.8">9 <tspan font-weight="400" font-size="14.4px">health</tspan></text>
+<text id="label26" class="for_r26" text-anchor="start" x="551.47934" y="681.21318" font-weight="400" font-size="17.6px" dy="5.8">6 <tspan font-weight="400" font-size="14.4px">attractiveness</tspan></text>
+<text id="label27" class="for_r27" text-anchor="start" x="551.47934" y="723.8215" font-weight="400" font-size="17.6px" dy="5.8">169 <tspan font-weight="400" font-size="14.4px">voice_qual</tspan></text>
+<text id="label28" class="for_r28" text-anchor="start" x="551.47934" y="773.11848" font-weight="400" font-size="17.6px" dy="5.8">50 <tspan font-weight="400" font-size="14.4px">speech_rhythm</tspan></text>
+<text id="label29" class="for_r29" text-anchor="start" x="551.47934" y="804.17365" font-weight="400" font-size="17.6px" dy="5.8">49 <tspan font-weight="400" font-size="14.4px">contour</tspan></text>
+<text id="label30" class="for_r30" text-anchor="start" x="551.47934" y="831.58046" font-weight="400" font-size="17.6px" dy="5.8">26 <tspan font-weight="400" font-size="14.4px">other_speech</tspan></text>
+</g>
+</g></svg>

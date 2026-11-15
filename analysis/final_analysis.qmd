@@ -470,6 +470,55 @@ long_df %>%
   )
 ```
 
+reorder the bars of the plot above to make it increasing order of "social" category:
+
+```{r}
+cat_colors <- c(
+  "Social"        = "#77AADD", # Deep indigo
+  "Psychological" = "#FFAABB", # Muted rose
+  "Physical"      = "#44BB99", # Seafoam teal
+  "Speech"        = "#EE8866", # Warm sand
+  "Other"         = "#EEDD88"  # Pale gray
+)
+
+
+long_df %>% 
+  filter(cat != "content") %>% 
+  mutate(
+    higher_order_cat = case_when(
+      cat %in% social_cats ~ "Social",
+      cat %in% phys_cats ~ "Physical",
+      cat %in% psych_cats ~ "Psychological",
+      cat %in% speech_cats ~ "Speech",
+      TRUE ~ "Other" 
+    ),
+    # Set exact left-to-right order (edit the sequence inside c() as desired)
+    higher_order_cat = factor(
+      higher_order_cat, 
+      levels = c("Social", "Psychological", "Physical", "Speech", "Other")
+    ),
+    # Order bars by increasing proportion of "Social"
+    voice = fct_reorder(voice, higher_order_cat == "Social", .fun = mean)
+  ) %>%
+  ggplot() +
+  geom_bar(
+    aes(y = voice, fill = higher_order_cat), 
+    position = position_fill(reverse = TRUE)
+  ) +
+  scale_fill_manual(values = cat_colors) +
+  labs(
+    x = "Proportion of Non-Content Responses",
+    y = "Voice",
+    fill = "Category Type"
+  ) + 
+  theme_minimal() +
+  theme(
+    legend.text = element_text(size = 6), 
+    legend.key.size = unit(0.3, "cm"),       
+    legend.margin = margin(0, 0, 0, 0)    
+  )
+
+```
 
 ## Sankey prep
 
@@ -520,6 +569,39 @@ ai_attitude_plot_2 <- ggplot(analysis_df, aes(x = "", y = ai_attitude_score)) +
   theme_minimal()
 
 ai_attitude_plot_2
+```
+
+```{r}
+ai_attitude_plot_3 <- ggplot(analysis_df, aes(x = ai_attitude_score)) +
+  geom_bar(fill = "#77AADD", color = "white", linewidth = 0.3) +
+  geom_vline(
+  xintercept = mean(analysis_df$ai_attitude_score, na.rm = TRUE),
+  linetype = "dashed", color = "#EE6677", linewidth = 0.7
+) +
+  geom_text(
+    stat = "count",
+    aes(label = after_stat(count)),
+    vjust = -0.4,
+    size = 3,
+    color = "gray30"
+  ) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+  labs(
+    title = "Distribution of AI Attitude Scores",
+    x = "AI Attitude Score",
+    y = "Number of Participants"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold", size = 13),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.line.x = element_line(color = "gray40", linewidth = 0.4)
+  )
+
+ai_attitude_plot_3
+
+
 ```
 
 ## Question: Person-like attributions persist, even at low humanness?
@@ -636,7 +718,7 @@ mutate(log2_lift = log2(lift)) %>%
   labs(title = "Semantic Priming (Red = Positive Priming, Blue = Suppression)")
 ```
 
-This can be challenging to interpret, given that there are many single-instance category sequences (e.g., age-age and emo_stab-profession only occur once). High lift can be interpreted as increased likelihood of the second (next) category occurring after the first category, compared to the overall probability of the second category in the dataset. Low lift is a decreased likelihood of the second category occurring after the first category, compared to the overall probability of the second category in the dataset. 
+This can be challenging to interpret, given that there are many single-instance category sequences (e.g., age-age and emo_stab-profession only occur once). High lift can be interpreted as increased likelihood of the second (next) category occurring after the first category, compared to the overall probability of the second category in the dataset. Low lift is a decreased likelihood of the second category occurring after the first category, compared to the overall probability of the second category in the dataset.
 
 We see some within-category facilitation (e.g., an appearance mention increases the likelihood of another appearance mention). Inhibitory relationships seem weaker, and I can't really identify any consistent patterning.
 
@@ -656,7 +738,7 @@ robust_priming %>%
   labs(title = "Semantic Priming (Red = Positive Priming, Blue = Suppression)")
 ```
 
-Frequent positive priming between: naturalness-naturalness, profession-profession, gender-age. Frequent but weak inhibition between: education-emo_stab, education-gender, gender-education, agreeablness-voice_qual, voice_qual-agreeableness 
+Frequent positive priming between: naturalness-naturalness, profession-profession, gender-age. Frequent but weak inhibition between: education-emo_stab, education-gender, gender-education, agreeablness-voice_qual, voice_qual-agreeableness
 
 ```{r}
 # adjust lift/count threshold as needed
@@ -693,7 +775,8 @@ ggraph(g, layout = "fr") +
   scale_edge_alpha(range = c(0.4, 1), guide = "none") +
   theme_void()
 ```
-The attempt at a network visualization is still hard to read, but gender, education, and extraversion are more likely following many different types of categories... naturalness feeds into more naturalness comments, and profesions, persona, and region also seem to iterate on themselves. 
+
+The attempt at a network visualization is still hard to read, but gender, education, and extraversion are more likely following many different types of categories... naturalness feeds into more naturalness comments, and profesions, persona, and region also seem to iterate on themselves.
 
 ## \[SKIPPED\] Question: AI attitude as predictor?
 
@@ -769,7 +852,6 @@ ggplot(eval_sub, aes(x = ai_score,
   theme_minimal()
 ```
 
-
 ```{r}
 glm(p_positive ~ scale(humanness_rating)*scale(ai_score), 
     data = eval_sub,
@@ -778,12 +860,16 @@ glm(p_positive ~ scale(humanness_rating)*scale(ai_score),
 ```
 
 ## word cloud prep
+
 (includes content words...)
 
 ```{r}
 gracie_words <- analysis_df %>% filter(voice == "gracie_valley")
-gracie_words <- gracie_words[,c("word_1", "word_2", "word_3", "word_4", "word_5")]
+gracie_words <- gracie_words[, c("word_1", "word_2", "word_3", "word_4", "word_5")]
+
 gracie_words_lst <- unlist(gracie_words) %>% as.character()
+gracie_words_lst <- gracie_words_lst[!tolower(trimws(gracie_words_lst)) %in% categories$content]
+
 write_clip(gracie_words_lst)
 ```
 
@@ -791,6 +877,7 @@ write_clip(gracie_words_lst)
 vince_words <- analysis_df %>% filter(voice == "vince_duglus")
 vince_words <- vince_words[,c("word_1", "word_2", "word_3", "word_4", "word_5")]
 vince_words_lst <- unlist(vince_words) %>% as.character()
+vince_words_lst <- vince_words_lst[!tolower(trimws(vince_words_lst)) %in% categories$content]
 write_clip(vince_words_lst)
 ```
 
@@ -807,4 +894,3 @@ john_words <- john_words[,c("word_1", "word_2", "word_3", "word_4", "word_5")]
 john_words_lst <- unlist(john_words) %>% as.character()
 write_clip(john_words_lst)
 ```
-
