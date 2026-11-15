@@ -428,6 +428,31 @@ ggplot(analysis_df, aes(
 ```
 
 ```{r}
+ggplot(analysis_df, aes(
+  x = reorder(voice, humanness_rating, FUN = mean, na.rm = TRUE), 
+  y = humanness_rating, 
+  fill = reorder(voice, humanness_rating, FUN = mean, na.rm = TRUE))) + 
+  geom_violin(alpha = 0.7) +
+  geom_jitter(width = 0.1, alpha = 0.4, size = 1) +
+  stat_summary(
+    fun = mean, 
+    geom = "point", 
+    shape = 21, 
+    size = 1, 
+    fill = "white", 
+    color = "black"
+  ) +
+  scale_fill_viridis_d(option = "turbo") + 
+  labs(x = "Voice", y = "Humanness Rating") +
+  coord_flip() + 
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    aspect.ratio = 1
+  )
+```
+
+```{r}
 long_df %>% 
   filter(cat != "content") %>% 
   ggplot() +
