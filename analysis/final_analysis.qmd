@@ -961,3 +961,46 @@ brother_words_lst <- unlist(brother_words) %>% as.character()
 brother_words_lst <- brother_words_lst[!tolower(trimws(brother_words_lst)) %in% categories$content]
 write_clip(brother_words_lst)
 ```
+
+```{r}
+xiaoxi_words <- analysis_df %>% filter(voice == "xiaoxi")
+xiaoxi_words <- xiaoxi_words[,c("word_1", "word_2", "word_3", "word_4", "word_5")]
+xiaoxi_words_lst <- unlist(xiaoxi_words) %>% as.character()
+xiaoxi_words_lst <- xiaoxi_words_lst[!tolower(trimws(xiaoxi_words_lst)) %in% categories$content]
+write_clip(xiaoxi_words_lst)
+```
+
+```{r}
+zoe_words <- analysis_df %>% filter(voice == "zoe")
+zoe_words <- zoe_words[,c("word_1", "word_2", "word_3", "word_4", "word_5")]
+zoe_words_lst <- unlist(zoe_words) %>% as.character()
+zoe_words_lst <- zoe_words_lst[!tolower(trimws(zoe_words_lst)) %in% categories$content]
+write_clip(zoe_words_lst)
+```
+
+```{r}
+caring_words <- analysis_df %>% filter(voice == "caring_mother")
+caring_words <- caring_words[,c("word_1", "word_2", "word_3", "word_4", "word_5")]
+caring_words_lst <- unlist(caring_words) %>% as.character()
+caring_words_lst <- caring_words_lst[!tolower(trimws(caring_words_lst)) %in% categories$content]
+write_clip(caring_words_lst)
+
+```
+
+```{r}
+maria_words <- analysis_df %>% filter(voice == "maria_moody")
+maria_words <- maria_words[,c("word_1", "word_2", "word_3", "word_4", "word_5")]
+maria_words_lst <- unlist(maria_words) %>% as.character()
+maria_words_lst <- maria_words_lst[!tolower(trimws(maria_words_lst)) %in% categories$content]
+write_clip(maria_words_lst)
+
+```
+
+```{r}
+young_words <- analysis_df %>% filter(voice == "young_jamal")
+young_words <- young_words[,c("word_1", "word_2", "word_3", "word_4", "word_5")]
+young_words_lst <- unlist(young_words) %>% as.character()
+young_words_lst <- young_words_lst[!tolower(trimws(young_words_lst)) %in% categories$content]
+write_clip(young_words_lst)
+
+```
