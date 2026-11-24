@@ -1030,7 +1030,7 @@ write_clip(young_words_lst)
 
 ```
 
-## Question: Is AI attitude a predictor of lexicon affect?
+## \[VAD v1\] Question: Is AI attitude a predictor of lexicon affect?
 
 using: **The NRC Valence, Arousal, and Dominance Lexicon**
 
@@ -1146,6 +1146,8 @@ word_counts <- responses_long %>%
   )
 
 ```
+
+### shared w/ Vad2.1 until here —
 
 ```{r}
 
@@ -1462,22 +1464,331 @@ participant_vad %>%
 
 ```
 
+Conclusion: bad results because the NRC dic does not have many words people listed? or maybe actually no effect.
+
+follow up Ideas:
+
+-   affect score per voice???
+
+-   
+
+## \[VAD v2.1\]
+
 ```{r}
 
-# write out results
+#Load the v2 lexicon file (adjust path and column names to match the downloaded file)
+vad_v2 <- readr::read_tsv(file.choose())
+```
 
-write_csv(
-  participant_vad,
-  "participant_vad_scores.csv"
-)
+\[run the cells in VAD v1\]
 
-write_csv(
-  vad_word_level,
-  "word_level_vad_scores.csv"
-)
+```{r}
 
-write_csv(
-  vad_model_results,
-  "vad_regression_results.csv"
+vad_lexicon <- vad_v2 %>%
+  mutate(
+    word = clean_word(.data$term)
+  ) %>%
+  select(
+    term,
+    valence,
+    arousal,
+    dominance
+  )
+```
+
+```{r}
+
+vad_word_level <- responses_long %>%
+  # Remove empty responses and content words
+  filter(
+    is_nonempty,
+    !is_content_word
+  ) %>%
+  left_join(
+    vad_lexicon,
+    by = c("word_clean" = "term")
+  )
+
+# Inspect the matched words
+print(
+  vad_word_level %>%
+    select(
+      participant_row,
+      ai_score,
+      original_word,
+      word_clean,
+      valence,
+      arousal,
+      dominance
+    )
 )
+```
+
+```{r}
+
+
+
+unmatched_words <- vad_word_level %>%
+  filter(is.na(valence)) %>%
+  count(word_clean, sort = TRUE)
+
+cat("\nWords not found in VAD v2.1 lexicon list:\n")
+print(unmatched_words)
+
+```
+
+-- still found 115 words unmatched.
+
+```{r}
+
+#  Calculate each participant's mean VAD scores
+
+# Helper function: return NA rather than NaN
+# when a participant has no matched words
+
+mean_or_na <- function(x) {
+  if (all(is.na(x))) {
+    NA_real_
+  } else {
+    mean(x, na.rm = TRUE)
+  }
+}
+
+vad_summary <- vad_word_level %>%
+  group_by(participant_row) %>%
+  summarise(
+    n_vad_words = sum(!is.na(valence)),
+
+    n_vad_unmatched = sum(is.na(valence)),
+
+    mean_valence = mean_or_na(valence),
+
+    mean_arousal = mean_or_na(arousal),
+
+    mean_dominance = mean_or_na(dominance),
+
+    .groups = "drop"
+  )
+
+# Combine word counts and VAD scores.
+# Keep participants who have zero matched words as well.
+
+participant_vad <- participants_filtered %>%
+  select(
+    participant_row,
+    ai_score,
+    humanness_rating
+  ) %>%
+  left_join(
+    word_counts,
+    by = "participant_row"
+  ) %>%
+  left_join(
+    vad_summary,
+    by = "participant_row"
+  ) %>%
+  mutate(
+    across(
+      c(
+        n_words_entered,
+        n_content_words_removed,
+        n_noncontent_words,
+        n_vad_words,
+        n_vad_unmatched
+      ),
+      ~ replace_na(.x, 0L)
+    ),
+
+    # Proportion of non-content words successfully matched
+    vad_coverage = if_else(
+      n_noncontent_words > 0,
+      n_vad_words / n_noncontent_words,
+      NA_real_
+    )
+  )
+
+# Inspect participant-level data
+head(participant_vad)
+```
+
+```{r}
+
+#  Descriptive statistics
+
+participant_vad %>%
+  summarise(
+    n_participants = n(),
+
+    n_with_vad_scores = sum(
+      !is.na(mean_valence)
+    ),
+
+    mean_valence = mean(
+      mean_valence,
+      na.rm = TRUE
+    ),
+
+    sd_valence = sd(
+      mean_valence,
+      na.rm = TRUE
+    ),
+
+    mean_arousal = mean(
+      mean_arousal,
+      na.rm = TRUE
+    ),
+
+    sd_arousal = sd(
+      mean_arousal,
+      na.rm = TRUE
+    ),
+
+    mean_dominance = mean(
+      mean_dominance,
+      na.rm = TRUE
+    ),
+
+    sd_dominance = sd(
+      mean_dominance,
+      na.rm = TRUE
+    ),
+
+    mean_vad_coverage = mean(
+      vad_coverage,
+      na.rm = TRUE
+    )
+  ) %>%
+  tibble()
+
+```
+
+```{r}
+
+#  Linear regression:
+#     Does AI attitude predict lexical affect?
+
+fit_vad_model <- function(outcome, data) {
+
+  # Only include participants with both an AI score
+  # and a valid VAD score
+
+  model_data <- data %>%
+    filter(
+      is.finite(ai_score),
+      is.finite(.data[[outcome]])
+    )
+
+  # Check whether there is enough variation to fit a model
+  if (
+    nrow(model_data) < 3 ||
+    n_distinct(model_data$ai_score) < 2 ||
+    n_distinct(model_data[[outcome]]) < 2
+  ) {
+    return(
+      tibble(
+        dimension = outcome,
+        n = nrow(model_data),
+        estimate = NA_real_,
+        std.error = NA_real_,
+        statistic = NA_real_,
+        p.value = NA_real_,
+        conf.low = NA_real_,
+        conf.high = NA_real_,
+        r_squared = NA_real_
+      )
+    )
+  }
+
+  # Fit linear model
+  fit <- lm(
+    reformulate("ai_score", response = outcome),
+    data = model_data
+  )
+
+  model_stats <- broom::glance(fit)
+
+  # Extract the AI attitude coefficient
+  broom::tidy(fit, conf.int = TRUE) %>%
+    filter(term == "ai_score") %>%
+    transmute(
+      dimension = outcome,
+      n = nobs(fit),
+      estimate,
+      std.error,
+      statistic,
+      p.value,
+      conf.low,
+      conf.high,
+      r_squared = model_stats$r.squared
+    )
+}
+
+# Run three separate models
+vad_model_results <- purrr::map_dfr(
+  c(
+    "mean_valence",
+    "mean_arousal",
+    "mean_dominance"
+  ),
+  fit_vad_model,
+  data = participant_vad
+) %>%
+  mutate(
+    # Correct for testing three affect dimensions
+    p_adj_BH = p.adjust(
+      p.value,
+      method = "BH"
+    )
+  )
+
+tibble(vad_model_results)
+
+
+```
+
+```{r}
+#visualize
+
+
+participant_vad %>%
+  select(
+    ai_score,
+    mean_valence,
+    mean_arousal,
+    mean_dominance
+  ) %>%
+  pivot_longer(
+    cols = starts_with("mean_"),
+    names_to = "dimension",
+    values_to = "mean_vad"
+  ) %>%
+  mutate(
+    dimension = recode(
+      dimension,
+      mean_valence = "Valence",
+      mean_arousal = "Arousal",
+      mean_dominance = "Dominance"
+    )
+  ) %>%
+  ggplot(
+    aes(
+      x = ai_score,
+      y = mean_vad
+    )
+  ) +
+  geom_point(
+    alpha = 0.6,
+    size = 2
+  ) +
+  geom_smooth(
+    method = "lm",
+    se = TRUE
+  ) +
+  facet_wrap(~ dimension) +
+  labs(
+    x = "AI Attitude Score",
+    y = "Mean NRC VAD Score",
+    title = "AI Attitudes and the Affect of Associated Words"
+  ) +
+  theme_minimal(base_size = 13)
 ```
