@@ -1080,7 +1080,7 @@ content_words <- categories[[1]] %>%
 
 participants_filtered <- analysis_df %>%
   mutate(
-    .participant_row = row_number(),
+    participant_row = paste0("P", row_number()),
     ai_score = as.numeric(as.character(ai_score)),
     humanness_rating = as.numeric(as.character(humanness_rating))
   ) %>%
@@ -1107,7 +1107,7 @@ cat(
 
 responses_long <- participants_filtered %>%
   select(
-    .participant_row,
+    participant_row,
     ai_score,
     humanness_rating,
     all_of(word_cols)
@@ -1132,7 +1132,7 @@ responses_long <- participants_filtered %>%
 #Count content words and usable responses
 
 word_counts <- responses_long %>%
-  group_by(.participant_row) %>%
+  group_by(participant_row) %>%
   summarise(
     n_words_entered = sum(is_nonempty),
 
@@ -1152,26 +1152,9 @@ word_counts <- responses_long %>%
 
 vad_raw <- textdata::lexicon_nrc_vad()
 
-#check and repair column names if necessary
-if (is.null(names(vad_raw)) || !"word" %in% names(vad_raw)) {
-
-  if (ncol(vad_raw) == 4) {
-
-    names(vad_raw) <- c(
-      "word",
-      "Valence",
-      "Arousal",
-      "Dominance"
-    )
-
-  } else {
-    stop("Unexpected NRC VAD lexicon structure.")
-  }
-}
-
 vad_lexicon <- vad_raw %>%
   mutate(
-    word = clean_word(.data$word)
+    word = clean_word(.data$Word)
   ) %>%
   select(
     word,
@@ -1199,7 +1182,7 @@ vad_word_level <- responses_long %>%
 print(
   vad_word_level %>%
     select(
-      .participant_row,
+      participant_row,
       ai_score,
       original_word,
       word_clean,
@@ -1237,7 +1220,7 @@ mean_or_na <- function(x) {
 }
 
 vad_summary <- vad_word_level %>%
-  group_by(.participant_row) %>%
+  group_by(participant_row) %>%
   summarise(
     n_vad_words = sum(!is.na(Valence)),
 
@@ -1257,17 +1240,17 @@ vad_summary <- vad_word_level %>%
 
 participant_vad <- participants_filtered %>%
   select(
-    .participant_row,
+    participant_row,
     ai_score,
     humanness_rating
   ) %>%
   left_join(
     word_counts,
-    by = ".participant_row"
+    by = "participant_row"
   ) %>%
   left_join(
     vad_summary,
-    by = ".participant_row"
+    by = "participant_row"
   ) %>%
   mutate(
     across(
@@ -1290,7 +1273,7 @@ participant_vad <- participants_filtered %>%
   )
 
 # Inspect participant-level data
-print(participant_vad)
+head(participant_vad)
 
 
 ```
@@ -1342,7 +1325,7 @@ participant_vad %>%
       na.rm = TRUE
     )
   ) %>%
-  print()
+  tibble()
 
 ```
 
@@ -1425,7 +1408,7 @@ vad_model_results <- purrr::map_dfr(
     )
   )
 
-print(vad_model_results)
+tibble(vad_model_results)
 
 
 
