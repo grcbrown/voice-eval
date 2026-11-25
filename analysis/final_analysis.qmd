@@ -1792,3 +1792,9 @@ participant_vad %>%
   ) +
   theme_minimal(base_size = 13)
 ```
+
+# LLM VAD rating prep
+
+```{r}
+write.csv(responses_long, "responses_long.csv", row.names = FALSE)
+```
