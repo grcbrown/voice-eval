@@ -1584,15 +1584,15 @@ vad_summary <- vad_word_level %>%
   group_by(participant_row) %>%
   summarise(
     n_vad_words = sum(!is.na(valence)),
-
+    
     n_vad_unmatched = sum(is.na(valence)),
-
+    
     mean_valence = mean_or_na(valence),
-
+    
     mean_arousal = mean_or_na(arousal),
-
+    
     mean_dominance = mean_or_na(dominance),
-
+    
     .groups = "drop"
   )
 
@@ -1624,7 +1624,7 @@ participant_vad <- participants_filtered %>%
       ),
       ~ replace_na(.x, 0L)
     ),
-
+    
     # Proportion of non-content words successfully matched
     vad_coverage = if_else(
       n_noncontent_words > 0,
@@ -1822,17 +1822,240 @@ participant_vad %>%
 # LLM VAD rating prep
 
 ```{r}
-write.csv(responses_long, "responses_long.csv", row.names = FALSE)
+write.csv(responses_long, "responses_long_lowhumanness.csv", row.names = FALSE)
 ```
 
 # LLM VAD rating 
+
+OOPS
+
+so the LLM was based on the incorrect responses_long...... (basically words for HIGH humanness data, instead of low humanness data.
+
+i have to re-
 
 ```{r}
 llm_df <- read.csv("/Users/yukat/Developer/voice_eval/analysis/vad_scores_gemini.csv")
 ```
 
 ```{r}
+
+```
+
+```{r}
 library(tidyverse)
 library(textdata)
 library(broom)
+```
+
+```{r}
+llm_word_level <- responses_long %>%
+  # Remove empty responses and content words
+  filter(
+    is_nonempty,
+    !is_content_word
+  ) %>%
+  left_join(
+    llm_df,
+    by = c("word_clean" = "term")
+  )
+```
+
+```{r}
+#check if any unmatched word
+
+
+
+unmatched_words <- llm_word_level %>%
+  filter(is.na(valence)) %>%
+  count(word_clean, sort = TRUE)
+
+nrow(unmatched_words)
+print(unmatched_words)
+
+```
+
+```{r}
+print(
+  llm_word_level %>%
+    select(
+      participant_row,
+      ai_score,
+      original_word,
+      word_clean,
+      valence,
+      arousal,
+      dominance
+    )
+)
+```
+
+```{r}
+
+#  Calculate each participant's mean VAD scores
+
+# Helper function: return NA rather than NaN
+# when a participant has no matched words
+
+mean_or_na <- function(x) {
+  if (all(is.na(x))) {
+    NA_real_
+  } else {
+    mean(x, na.rm = TRUE)
+  }
+}
+
+llm_summary <- llm_word_level %>%
+  group_by(participant_row) %>%
+  summarise(
+    n_vad_words = sum(!is.na(valence)),
+    
+    n_vad_unmatched = sum(is.na(valence)),
+    
+    mean_valence = mean_or_na(valence),
+    
+    mean_arousal = mean_or_na(arousal),
+    
+    mean_dominance = mean_or_na(dominance),
+    
+    .groups = "drop"
+  )
+
+# Combine word counts and VAD scores.
+# Keep participants who have zero matched words as well.
+
+participant_llm <- participants_filtered %>%
+  select(
+    participant_row,
+    ai_score,
+    humanness_rating
+  ) %>%
+  left_join(
+    word_counts,
+    by = "participant_row"
+  ) %>%
+  left_join(
+    llm_summary,
+    by = "participant_row"
+  ) %>%
+  mutate(
+    across(
+      c(
+        n_words_entered,
+        n_content_words_removed,
+        n_noncontent_words,
+        n_vad_words,
+        n_vad_unmatched
+      ),
+      ~ replace_na(.x, 0L)
+    ),
+    
+    # Proportion of non-content words successfully matched
+    llm_coverage = if_else(
+      n_noncontent_words > 0,
+      n_vad_words / n_noncontent_words,
+      NA_real_
+    )
+  )
+
+# Inspect participant-level data
+head(participant_llm)
+```
+
+```{r}
+
+#  Descriptive statistics
+
+participant_llm %>%
+  summarise(
+    n_participants = n(),
+    
+    n_with_llm_scores = sum(
+      !is.na(mean_valence)
+    ),
+    
+    mean_valence = mean(
+      mean_valence,
+      na.rm = TRUE
+    ),
+    
+    sd_valence = sd(
+      mean_valence,
+      na.rm = TRUE
+    ),
+    
+    mean_arousal = mean(
+      mean_arousal,
+      na.rm = TRUE
+    ),
+    
+    sd_arousal = sd(
+      mean_arousal,
+      na.rm = TRUE
+    ),
+    
+    mean_dominance = mean(
+      mean_dominance,
+      na.rm = TRUE
+    ),
+    
+    sd_dominance = sd(
+      mean_dominance,
+      na.rm = TRUE
+    ),
+    
+    mean_vad_coverage = mean(
+      llm_coverage,
+      na.rm = TRUE
+    )
+  ) %>%
+  tibble()
+
+```
+
+```{r}
+
+#visualize
+
+
+participant_llm %>%
+  select(
+    ai_score,
+    mean_valence,
+    mean_arousal,
+    mean_dominance
+  ) %>%
+  pivot_longer(
+    cols = starts_with("mean_"),
+    names_to = "dimension",
+    values_to = "mean_vad"
+  ) %>%
+  mutate(
+    dimension = recode(
+      dimension,
+      mean_valence = "Valence",
+      mean_arousal = "Arousal",
+      mean_dominance = "Dominance"
+    )
+  ) %>%
+  ggplot(
+    aes(
+      x = ai_score,
+      y = mean_vad
+    )
+  ) +
+  geom_point(
+    alpha = 0.6,
+    size = 2
+  ) +
+  geom_smooth(
+    method = "lm",
+    se = TRUE
+  ) +
+  facet_wrap(~ dimension) +
+  labs(
+    x = "AI Attitude Score",
+    y = "Mean LLM affect Score",
+    title = "AI Attitudes and the Affect of Associated Words"
+  ) +
+  theme_minimal(base_size = 13)
 ```
