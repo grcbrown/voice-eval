@@ -1824,3 +1824,5 @@ participant_vad %>%
 ```{r}
 write.csv(responses_long, "responses_long.csv", row.names = FALSE)
 ```
+
+# LLM VAD rating prep

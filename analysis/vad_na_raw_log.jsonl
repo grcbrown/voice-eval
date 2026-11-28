@@ -1,0 +1,4 @@
+{"term": "loud", "raw_output": "[\n  {\n    \"expression\": \"loud\",\n    \"valence\": -0.050,\n    \" arousal\": 0.750,\n    \" dominance\": 0.350\n  }\n]"}
+{"term": "pleasant", "raw_output": "[\n  {\n    \"expression\": \"pleasant\",\n    \"valence\": 0.812,\n    \" arousal\": 0.125,\n    \" dominance\": 0.350\n  }\n]"}
+{"term": "therapist", "raw_output": "[\n  0.650,\n  0.100,\n  0.550\n]"}
+{"term": "worldly", "raw_output": "[\n  0.500,\n  0.200,\n  0.600\n]"}
