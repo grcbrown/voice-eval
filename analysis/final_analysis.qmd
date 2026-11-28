@@ -598,7 +598,7 @@ ai_attitude_plot_2
 
 ```{r}
 ai_attitude_plot_3 <- ggplot(analysis_df, aes(x = ai_attitude_score)) +
-  geom_bar(fill = "#77AADD", color = "white", linewidth = 0.3) +
+  geom_bar(fill = "#96c4f2", color = "white", linewidth = 0.3) +
   geom_vline(
   xintercept = mean(analysis_df$ai_attitude_score, na.rm = TRUE),
   linetype = "dashed", color = "#EE6677", linewidth = 0.7
@@ -621,12 +621,25 @@ ai_attitude_plot_3 <- ggplot(analysis_df, aes(x = ai_attitude_score)) +
     plot.title = element_text(face = "bold", size = 13),
     panel.grid.major.x = element_blank(),
     panel.grid.minor = element_blank(),
-    axis.line.x = element_line(color = "gray40", linewidth = 0.4)
+    axis.line.x = element_line(color = "gray40", linewidth = 0.4),
+   
+    panel.background = element_rect(fill = "transparent", colour = NA),
   )
 
 ai_attitude_plot_3
 
 
+```
+
+```{r}
+#reg stats about AI attitude scores
+
+aiscore_mean <- mean(analysis_df$ai_attitude_score)
+
+aiscore_sd <- sd(analysis_df$ai_attitude_score)
+
+aiscore_mean
+aiscore_sd
 ```
 
 ## Question: Person-like attributions persist, even at low humanness?
@@ -1086,7 +1099,7 @@ participants_filtered <- analysis_df %>%
   ) %>%
   filter(
     !is.na(humanness_rating),
-    humanness_rating >= 50
+    humanness_rating <= 50
   )
 
 #------check how many participants remain-------#
@@ -1412,6 +1425,19 @@ vad_model_results <- purrr::map_dfr(
 
 tibble(vad_model_results)
 
+
+
+```
+
+```{r}
+library(lme4)
+
+model_base <- lmer()
+  
+model_ <-
+  
+  
+model_int <- 
 
 
 ```
