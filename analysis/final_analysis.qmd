@@ -1827,18 +1827,8 @@ write.csv(responses_long, "responses_long_lowhumanness.csv", row.names = FALSE)
 
 # LLM VAD rating 
 
-OOPS
-
-so the LLM was based on the incorrect responses_long...... (basically words for HIGH humanness data, instead of low humanness data.
-
-i have to re-
-
 ```{r}
 llm_df <- read.csv("/Users/yukat/Developer/voice_eval/analysis/vad_scores_gemini.csv")
-```
-
-```{r}
-
 ```
 
 ```{r}
