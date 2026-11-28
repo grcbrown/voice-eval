@@ -1494,9 +1494,9 @@ Conclusion: bad results because the NRC dic does not have many words people list
 
 follow up Ideas:
 
--   affect score per voice???
+- affect score per voice???
 
--   
+- 
 
 ## \[VAD v2.1\]
 
@@ -1825,4 +1825,14 @@ participant_vad %>%
 write.csv(responses_long, "responses_long.csv", row.names = FALSE)
 ```
 
-# LLM VAD rating prep
+# LLM VAD rating 
+
+```{r}
+llm_df <- read.csv("/Users/yukat/Developer/voice_eval/analysis/vad_scores_gemini.csv")
+```
+
+```{r}
+library(tidyverse)
+library(textdata)
+library(broom)
+```

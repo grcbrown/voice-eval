@@ -2,3 +2,6 @@
 {"term": "pleasant", "raw_output": "[\n  {\n    \"expression\": \"pleasant\",\n    \"valence\": 0.812,\n    \" arousal\": 0.125,\n    \" dominance\": 0.350\n  }\n]"}
 {"term": "therapist", "raw_output": "[\n  0.650,\n  0.100,\n  0.550\n]"}
 {"term": "worldly", "raw_output": "[\n  0.500,\n  0.200,\n  0.600\n]"}
+{"term": "ditzy", "raw_output": "[\n  {\n    \"expression\": \"ditzy\",\n    \"valence\": -0.350,\n    \" arousal\": 0.100,\n    \" dominance\": -0.400\n  }\n]"}
+{"term": "sequential", "raw_output": "[\n  0.0,\n  -0.15,\n  0.1\n]"}
+{"term": "upbeat", "raw_output": "[\n  0.850,\n  0.720,\n  0.650\n]"}
